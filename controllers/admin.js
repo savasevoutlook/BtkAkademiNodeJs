@@ -72,9 +72,11 @@ exports.postEditProduct = (req, res, next) => {
     product.description = req.body.description;
     product.categoryId = req.body.categoryId;
 
-    Product.updateProduct(product);
-
-    res.redirect("/admin/products?action=edit&id=" + product.id);
+    Product.updateProduct(product).then(() => {
+        res.redirect("/admin/products?action=edit");
+    }).catch(err => {
+        console.log(err);
+    });
 };
 
 exports.postDeleteProduct = (req, res, next) => {

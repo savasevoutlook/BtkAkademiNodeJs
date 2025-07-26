@@ -28,10 +28,8 @@ module.exports = class Product {
     }
 
     static updateProduct(product) {
-        const index = products.findIndex(p => p.id === product.id);
-        if (index !== -1) {
-            products[index] = product;
-        }
+        return connection.execute('UPDATE products SET name = ?, price = ?, image = ?, description = ?, categoryId = ? WHERE id = ?',
+            [product.name, product.price, product.image, product.description, product.categoryId, product.id]);
     }
 
     static deleteById(id) {
