@@ -1,0 +1,39 @@
+extends ../layouts/main-layout.pug
+
+block styles
+    link(rel="stylesheet", href="/css/forms.css")
+
+block content
+    .card.card-default 
+        .card-header
+            h6 Add Product
+        .card-body
+            form(action="/admin/add-product", method="POST")
+                .form-group.row
+                    label(for="name").col-2.col-form-label Prodcut Name
+                    .col-10
+                        input.form-control#name(type="text", name="name", required)
+                .form-group.row
+                    label(for="price").col-2.col-form-label Price
+                    .col-10
+                        input.form-control#price(type="text", name="price", required)
+                .form-group.row
+                    label(for="image").col-2.col-form-label Image
+                    .col-10
+                        input.form-control#image(type="text", name="image", required)
+                .form-group.row
+                    label(for="description").col-2.col-form-label Description
+                    .col-10
+                        textarea.form-control#description(name="description", required)
+                .form-group.row
+                    label(for="categoryId").col-2.col-form-label Category
+                    .col-10
+                        select.form-control#categoryId(name="categoryId", required)
+                            option(value="", disabled, selected) Select Category
+                            each category in categories
+                                option(value=`${category.id}`) #{category.name}
+
+                .form-group.row
+                    .col-10.offset-2
+                        button.btn.btn-primary(type="submit") Save
+

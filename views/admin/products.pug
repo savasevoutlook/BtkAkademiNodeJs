@@ -1,0 +1,36 @@
+extends ../layouts/main-layout.pug
+
+block content
+    if (action !== undefined)
+        if (action === 'edit')
+            div.alert.alert-success The product has been updated.
+        else if (action === 'delete')
+            div.alert.alert-danger The product has been deleted.
+
+    .row
+        if (products && products.length > 0)
+            .col-md-12
+                h2 Products List
+                table.table.table-striped.table-bordered
+                    thead
+                        tr
+                            th(style="width: 10%;").text-center Image
+                            th Name
+                            th Price
+                            th(style="width: 15%;").text-center Actions
+                    tbody
+                        each product in products
+                            tr
+                                td.text-center
+                                    img(src=`/img/${product.image}`, alt=`${product.name}`, style='width: 100px;')
+                                td #{product.name}
+                                td #{product.price} TL
+                                td.text-center
+                                    a.btn.btn-primary.btn-sm(href=`/admin/edit-product/${product.id}`) Edit
+
+                                    form(action='/admin/delete-product', method='post')
+                                        input(type='hidden', name='productId', value=`${product.id}`)
+                                        button(type='submit').btn.btn-danger.btn-sm Delete
+        else
+            .col-md-12
+                h2 No Products Available

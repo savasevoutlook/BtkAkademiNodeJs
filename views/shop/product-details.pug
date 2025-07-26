@@ -1,0 +1,13 @@
+extends ../layouts/main-layout.pug
+
+block content
+    .row 
+        .col-md-4.border.border-secondary
+            img(src=`/img/${product.image}`, alt=`${product.name}`).img-fluid
+        .col-md-8.pl-4
+            h5 #{product.name}
+            hr
+            p #{product.description}
+            p #{product.price} TL
+            button(type="submit").btn.btn-outline-success
+                i.fa.fa-shopping-cart  Add to Cart

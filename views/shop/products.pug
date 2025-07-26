@@ -1,0 +1,16 @@
+extends ../layouts/main-layout.pug
+
+include ../includes/createProduct.pug
+
+block content
+    .row
+        .col-3
+            include ../includes/menu.pug
+        .col-9
+            .row
+                if products.length > 0
+                    each product in products
+                        +createProduct(product)
+                else
+                    .col-12
+                        h6 No Products 
