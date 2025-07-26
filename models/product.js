@@ -19,7 +19,7 @@ module.exports = class Product {
     }
 
     static getProductsByCategoryId(categoryId) {
-        return products.filter(p => p.categoryId === categoryId) || [];
+        return connection.execute('SELECT * FROM products WHERE categoryId = ?', [categoryId]);
     }
 
     saveProduct() {
