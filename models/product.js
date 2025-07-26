@@ -32,12 +32,7 @@ module.exports = class Product {
             [product.name, product.price, product.image, product.description, product.categoryId, product.id]);
     }
 
-    static deleteById(id) {
-        
-        const index = products.findIndex(p => p.id === id);
-
-        if (index !== -1)
-            products.splice(index, 1);
+    static deleteProductById(id) {
+        return connection.execute('DELETE FROM products WHERE id = ?', [id]);        
     }
-
 };
