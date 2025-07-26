@@ -23,7 +23,10 @@ module.exports = class Product {
     }
 
     saveProduct() {
-        products.push(this);
+        connection.execute(
+            'INSERT INTO products (name, price, image, description, categoryId) VALUES (?, ?, ?, ?, ?)',
+            [this.name, this.price, this.image, this.description, this.categoryId]
+        );
     }
 
     static updateProduct(product) {
