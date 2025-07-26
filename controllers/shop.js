@@ -42,7 +42,8 @@ exports.getProduct = (req, res, next) => {
     Product.getProductById(req.params.productId)
         .then(product => {
 
-            res.render('shop/product-details', { title: product.title,
+            res.render('shop/product-details', {
+                title: product[0][0].name,
                 product: product[0][0],
                 path: '/products'
             });
