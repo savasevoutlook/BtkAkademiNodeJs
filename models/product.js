@@ -14,9 +14,8 @@ module.exports = class Product {
         return connection.execute('SELECT * FROM products');
     }
 
-    static getById(id) {
-        const product = products.find(p => p.id === id);
-        return product || null;
+    static getProductById(id) {
+        return connection.execute('SELECT * FROM products WHERE id = ?', [id])
     }
 
     static getProductsByCategoryId(categoryId) {

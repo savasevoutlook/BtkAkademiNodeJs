@@ -39,12 +39,17 @@ exports.getProducts = (req, res, next) => {
 
 exports.getProduct = (req, res, next) => {
 
-    const product = Product.getById(req.params.productId);
+    Product.getProductById(req.params.productId)
+        .then(product => {
 
-    res.render('shop/product-details', { title: product.title,
-        product: product,
-        path: '/products'
-    });
+            res.render('shop/product-details', { title: product.title,
+                product: product[0][0],
+                path: '/products'
+            });
+
+        }).catch(err => {
+            console.log(err);
+        });
 };
 
 exports.getProductsByCategory = (req, res, next) => {
@@ -69,7 +74,6 @@ exports.getCart = (req, res, next) => {
         path: '/cart'
     });
 };
-
 
 exports.getOrders = (req, res, next) => {
 
