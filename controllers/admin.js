@@ -37,9 +37,11 @@ exports.postAddProduct = (req, res, next) => {
         req.body.categoryId,
     );
 
-    product.saveProduct();
-
-    res.redirect("/admin/products");
+    product.saveProduct().then(() => {
+        res.redirect("/admin/products");
+    }).catch(err => {
+        console.log(err);
+    });
 };
 
 exports.getEditProduct = (req, res, next) => {
