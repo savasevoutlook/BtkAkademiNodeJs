@@ -32,19 +32,33 @@ exports.getAddProduct = (req, res, next) => {
 
 exports.postAddProduct = (req, res, next) => {
 
-    const product = new Product(
-        req.body.name,
-        req.body.price,
-        req.body.image,
-        req.body.description,
-        req.body.categoryId,
-    );
+    // Product.create({
+    //     name: req.body.name,
+    //     price: req.body.price,
+    //     image: req.body.image,
+    //     description: req.body.description,
+    //     categoryId: req.body.categoryId
+    // }).then(() => {
+    //     res.redirect("/admin/products");
+    // }).catch(err => {
+    //     console.log(err);
+    // });
 
-    product.saveProduct().then(() => {
-        res.redirect("/admin/products");
-    }).catch(err => {
-        console.log(err);
+    const product = Product.build({
+        name: req.body.name,
+        price: req.body.price,
+        image: req.body.image,
+        description: req.body.description,
+        categoryId: req.body.categoryId
     });
+
+    product.save()
+        .then(result => {
+            console.log(result);
+        })
+        .catch(err => {
+            console.timeLog(err);
+        });
 };
 
 exports.getEditProduct = (req, res, next) => {
