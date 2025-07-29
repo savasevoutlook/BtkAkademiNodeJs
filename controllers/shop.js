@@ -43,8 +43,8 @@ exports.getProduct = (req, res, next) => {
     Product.findByPk(req.params.productId)
         .then(product => {
             res.render('shop/product-details', {
-                title: product[0][0].name,
-                product: product[0][0],
+                title: product.name,
+                product: product,
                 path: '/products'
             });
         }).catch(err => {
@@ -61,8 +61,8 @@ exports.getProductsByCategory = (req, res, next) => {
                 .then(categories => {
                     res.render('shop/products', {
                         title: 'Products',
-                        products: products[0],
-                        categories: categories[0],
+                        products: products,
+                        categories: categories,
                         selectedCategoryId: categoryId,
                         path: '/products'
                     });
