@@ -1,38 +1,33 @@
-const connection = require('../utility/database');
+const sequelize = require('../utility/database');
+const { DataTypes } = require('sequelize');
 
-module.exports = class Product {
-
-    constructor(name, price, image, description, categoryId) {
-        this.name = name;
-        this.price = price;
-        this.image = image;
-        this.description = description;
-        this.categoryId = categoryId;
+const Product = sequelize.define('product', {
+    id: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        allowNull: false,
+        primaryKey: true
+    },
+    name: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    price: {
+        type: DataTypes.DOUBLE,
+        allowNull: false
+    },
+    image: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    description: {
+        type: DataTypes.TEXT,
+        allowNull: true
+    },
+    categoryId: {
+        type: DataTypes.INTEGER,
+        allowNull: false
     }
+});
 
-    static getAllProducts() {
-        return connection.execute('SELECT * FROM products');
-    }
-
-    static getProductById(id) {
-        return connection.execute('SELECT * FROM products WHERE id = ?', [id])
-    }
-
-    static getProductsByCategoryId(categoryId) {
-        return connection.execute('SELECT * FROM products WHERE categoryId = ?', [categoryId]);
-    }
-
-    saveProduct() {
-        return connection.execute('INSERT INTO products (name, price, image, description, categoryId) VALUES (?, ?, ?, ?, ?)',
-            [this.name, this.price, this.image, this.description, this.categoryId]);
-    }
-
-    static updateProduct(product) {
-        return connection.execute('UPDATE products SET name = ?, price = ?, image = ?, description = ?, categoryId = ? WHERE id = ?',
-            [product.name, product.price, product.image, product.description, product.categoryId, product.id]);
-    }
-
-    static deleteProductById(id) {
-        return connection.execute('DELETE FROM products WHERE id = ?', [id]);        
-    }
-};
+module.exports = Product;

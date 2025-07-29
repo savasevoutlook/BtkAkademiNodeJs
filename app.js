@@ -14,13 +14,13 @@ app.use('/admin', adminRoutes);
 const shopRoutes = require('./routes/shop');
 app.use(shopRoutes);
 
-sequelize.authenticate()
-    .then(() => {
-        console.log('Database connected successfully');
-    })
-    .catch(err => {
-        console.error('Unable to connect to the database:', err);
-    });
+// sequelize.authenticate()
+//     .then(() => {
+//         console.log('Database connected successfully');
+//     })
+//     .catch(err => {
+//         console.error('Unable to connect to the database:', err);
+//     });
 
 const errorController = require('./controllers/errors');
 app.use(errorController.get404Page);
