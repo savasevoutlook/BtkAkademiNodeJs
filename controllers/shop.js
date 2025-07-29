@@ -2,7 +2,7 @@ const Product = require('../models/product');
 const Category = require('../models/category');
 
 exports.getIndex = (req, res, next) => {
-    Product.findAll()
+    Product.findAll({ attributes: ['id', 'name', 'price', 'image' ] })
         .then(products => {
             Category.findAll()
                 .then(categories => {
@@ -21,7 +21,7 @@ exports.getIndex = (req, res, next) => {
 };
 
 exports.getProducts = (req, res, next) => {
-    Product.findAll()
+    Product.findAll({ attributes: ['id', 'name', 'price', 'image' ] })
         .then(products => {
             Category.findAll()
                 .then(categories => {
@@ -55,7 +55,11 @@ exports.getProduct = (req, res, next) => {
 exports.getProductsByCategory = (req, res, next) => {
     const categoryId = req.params.categoryId;
 
-    Product.findAll({ where: { categoryId: categoryId }})
+    Product.findAll(
+    {
+        where: { categoryId: categoryId },
+        attributes: ['id', 'name', 'price', 'image' ]
+    })
         .then(products => {
             Category.findAll()
                 .then(categories => {

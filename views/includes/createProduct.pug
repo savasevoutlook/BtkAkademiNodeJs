@@ -5,8 +5,6 @@ mixin createProduct(product)
             .card-body
                 h5.card-title
                     a(href=`/products/${product.id}`) #{product.name}
-                p.card-text.pt-2 #{product.description}
-
                 small.text-muted
                     i.fas.fa-lira-sign #{product.price} TL
 

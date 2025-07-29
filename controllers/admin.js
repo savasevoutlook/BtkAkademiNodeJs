@@ -16,7 +16,7 @@ exports.getProducts = (req, res, next) => {
 };
 
 exports.getAddProduct = (req, res, next) => {
-    Category.findAll()
+    Category.findAll({ attributes: ['id', 'name'] })
         .then(categories => {
             res.render("admin/add-product", {
                 title: "New Product",
@@ -52,7 +52,7 @@ exports.postAddProduct = (req, res, next) => {
     });
 
     product.save()
-        .then(result => {
+        .then(() => {
             res.redirect("/admin/products");
         })
         .catch(err => {
@@ -63,7 +63,11 @@ exports.postAddProduct = (req, res, next) => {
 exports.getEditProduct = (req, res, next) => {
     Product.findByPk(req.params.productId)
         .then(product => {
-            Category.findAll()
+            if (!product) {
+                return res.redirect('/admin/products');
+            }
+
+            Category.findAll({ attributes: ['id', 'name'] })
                 .then(categories => {
                     res.render("admin/edit-product", {
                         title: "Edit Product",
@@ -80,19 +84,20 @@ exports.getEditProduct = (req, res, next) => {
 };
 
 exports.postEditProduct = (req, res, next) => {
-    const product = new Product();
-
-    product.id = req.body.id;
-    product.name = req.body.name;
-    product.price = req.body.price;
-    product.image = req.body.image;
-    product.description = req.body.description;
-    product.categoryId = req.body.categoryId;
-
-    Product.updateProduct(product)
+    Product.findByPk(id)
+        .then(product => {
+            product.name = req.body.name;
+            product.price = req.body.price;
+            product.image = req.body.image;
+            product.description = req.body.description;
+            product.categoryId = req.body.categoryId;
+            
+            return product.save();
+        })
         .then(() => {
             res.redirect("/admin/products?action=edit");
-        }).catch(err => {
+        })
+        .catch(err => {
             console.log(err);
         });
 };
