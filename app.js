@@ -4,6 +4,9 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const sequelize = require('./utility/database');
 
+const Product = require('./models/product');
+const Category = require('./models/category');
+
 app.set('view engine', 'pug');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -17,7 +20,11 @@ app.use(shopRoutes);
 const errorController = require('./controllers/errors');
 app.use(errorController.get404Page);
 
-sequelize.sync()
+Product.belongsTo(Category);
+//Category.hasMany(Product);
+//Product.hasOne(Category);
+
+sequelize.sync({ force: true })
     .then(result => {
         //console.log(result);
     })
