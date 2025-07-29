@@ -3,11 +3,11 @@ const Category = require("../models/category");
 
 exports.getProducts = (req, res, next) => {
     
-    Product.getAllProducts().then(products => {
+    Product.findAll().then(products => {
         
         res.render("admin/products", {
             title: "Admin Products",
-            products: products[0],
+            products: products,
             path: "/admin/products",
             action: req.query.action,
         });
@@ -19,15 +19,17 @@ exports.getProducts = (req, res, next) => {
 
 exports.getAddProduct = (req, res, next) => {
 
-    Category.getAllCategories().then(categories => {
-        res.render("admin/add-product", {
-            title: "New Product",
-            categories: categories[0],
-            path: "/admin/add-product",
+    Category.findAll()
+        .then(categories => {
+            res.render("admin/add-product", {
+                title: "New Product",
+                categories: categories,
+                path: "/admin/add-product",
+            });
+        })
+        .catch(err => {
+            console.log(err);
         });
-    }).catch(err => {
-        console.log(err);
-    });
 };
 
 exports.postAddProduct = (req, res, next) => {
@@ -66,18 +68,19 @@ exports.getEditProduct = (req, res, next) => {
     Product.getProductById(req.params.productId)
         .then(product => {
             
-            Category.getAllCategories().then(categories => {
-            
-                res.render("admin/edit-product", {
-                    title: "Edit Product",
-                    product: product[0][0],
-                    categories: categories[0],
-                    path: "/admin/edit-product",
-                });
+            Category.findAll()
+                .then(categories => {
                 
-            }).catch(err => {
-                console.log(err);
-            });
+                    res.render("admin/edit-product", {
+                        title: "Edit Product",
+                        product: product[0][0],
+                        categories: categories[0],
+                        path: "/admin/edit-product",
+                    });
+                    
+                }).catch(err => {
+                    console.log(err);
+                });
 
         }).catch(err => {
             console.log(err);
