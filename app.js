@@ -14,16 +14,16 @@ app.use('/admin', adminRoutes);
 const shopRoutes = require('./routes/shop');
 app.use(shopRoutes);
 
-// sequelize.authenticate()
-//     .then(() => {
-//         console.log('Database connected successfully');
-//     })
-//     .catch(err => {
-//         console.error('Unable to connect to the database:', err);
-//     });
-
 const errorController = require('./controllers/errors');
 app.use(errorController.get404Page);
+
+sequelize.sync()
+    .then(result => {
+        console.log(result);
+    })
+    .catch(err => {
+        console.log(err);
+    });
 
 app.listen(3000, () => {
     console.log('Server is running on port 3000');
