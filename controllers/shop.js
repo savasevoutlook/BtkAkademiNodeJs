@@ -55,7 +55,7 @@ exports.getProduct = (req, res, next) => {
 exports.getProductsByCategory = (req, res, next) => {
     const categoryId = req.params.categoryId;
 
-    Product.getProductsByCategoryId(categoryId)
+    Product.findAll({ where: { categoryId: categoryId }})
         .then(products => {
             Category.findAll()
                 .then(categories => {
