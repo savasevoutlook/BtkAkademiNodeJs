@@ -30,34 +30,17 @@ exports.getAddProduct = (req, res, next) => {
 };
 
 exports.postAddProduct = (req, res, next) => {
-
-    // Product.create({
-    //     name: req.body.name,
-    //     price: req.body.price,
-    //     image: req.body.image,
-    //     description: req.body.description,
-    //     categoryId: req.body.categoryId
-    // }).then(() => {
-    //     res.redirect("/admin/products");
-    // }).catch(err => {
-    //     console.log(err);
-    // });
-
-    const product = Product.build({
+    Product.create({
         name: req.body.name,
         price: req.body.price,
         image: req.body.image,
         description: req.body.description,
         categoryId: req.body.categoryId
+    }).then(() => {
+        res.redirect("/admin/products");
+    }).catch(err => {
+        console.log(err);
     });
-
-    product.save()
-        .then(() => {
-            res.redirect("/admin/products");
-        })
-        .catch(err => {
-            console.log(err);
-        });
 };
 
 exports.getEditProduct = (req, res, next) => {
