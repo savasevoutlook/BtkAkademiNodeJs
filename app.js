@@ -12,6 +12,17 @@ app.set('view engine', 'pug');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use((req, res, next) => {
+    User.findOne({ where: { email: 'savas.ev@outlook.com' } })
+        .then(user => {
+            req.user = user;
+            next();
+        })
+        .catch(err => {
+            console.log(err);
+        });
+});
+
 const adminRoutes = require('./routes/admin');
 app.use('/admin', adminRoutes);
 

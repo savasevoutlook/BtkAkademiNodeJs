@@ -30,12 +30,16 @@ exports.getAddProduct = (req, res, next) => {
 };
 
 exports.postAddProduct = (req, res, next) => {
+
+    console.log(req.user);
+
     Product.create({
         name: req.body.name,
         price: req.body.price,
         image: req.body.image,
         description: req.body.description,
-        categoryId: req.body.categoryId
+        categoryId: req.body.categoryId,
+        userId: req.user.id
     }).then(() => {
         res.redirect("/admin/products");
     }).catch(err => {
