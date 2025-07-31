@@ -41,11 +41,11 @@ sequelize.sync({ force: true })
                 return user;
             })
             .then(user => {
-                
+
                 Category.count().then(count => {
                     if (count === 0) {
 
-                        const products = [
+                        const categories = [
                             { name: 'İşlemci (CPU)', description: 'Bilgisayarın temel hesaplama gücünü sağlayan birim.' },
                             { name: 'Anakart (Motherboard)', description: 'Tüm donanım bileşenlerini birbirine bağlayan ana bileşen.' },
                             { name: 'Ekran Kartı (GPU)', description: 'Grafik işlemlerini gerçekleştiren, oyun ve profesyonel işler için olmazsa olmaz bileşen.' },
@@ -72,16 +72,15 @@ sequelize.sync({ force: true })
                             { name: 'Montaj Hizmeti', description: 'Toplama ve test işlemlerini kapsayan hizmet kategorisi.' },
                         ];
 
-                        const userId = user.id;
-                        const productsWithUser = products.map(p => ({ ...p, userId }));
-
-                        Category.bulkCreate(productsWithUser);
+                        Category.bulkCreate(categories);
                     }
                 });
 
                 Product.count().then(count => {
                     if (count === 0) {
-                        Product.bulkCreate([
+
+                        var products = [
+
                             // CPU (categoryId:1)
                             { name: 'Intel Core i7‑13700K', price: 16200, image: 'product1.jpg', description: 'Intel 13. nesil 16‑çekirdekli üst seviye CPU', categoryId: 1 },
                             { name: 'Intel Core i7‑13700KF', price: 15300, image: 'product2.jpg', description: 'Kutulu olmayan, overclock destekli i7‑KF', categoryId: 1 },
@@ -152,7 +151,13 @@ sequelize.sync({ force: true })
                             { name: 'Fractal Design Meshify 2 Compact', price: 24200, image: 'product124.jpg', description: 'Mesh panel, sessiz ve yüksek hava akışlı kasa', categoryId: 6 },
                             { name: 'Revenge Nova 3 ARGB', price: 1816, image: 'product125.jpg', description: '3×ARGB fanlı uygun fiyatlı gaming kasa', categoryId: 6 },
 
-                        ]);
+                        ]
+
+                        const userId = user.id;
+
+                        const productsWithUser = products.map(p => ({ ...p, userId }));
+
+                        Product.bulkCreate(productsWithUser);
                     }
                 });
 
