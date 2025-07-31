@@ -30,9 +30,6 @@ exports.getAddProduct = (req, res, next) => {
 };
 
 exports.postAddProduct = (req, res, next) => {
-
-    console.log(req.user);
-
     Product.create({
         name: req.body.name,
         price: req.body.price,
