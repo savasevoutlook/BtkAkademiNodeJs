@@ -6,6 +6,7 @@ const sequelize = require('./utility/database');
 
 const Product = require('./models/product');
 const Category = require('./models/category');
+const User = require('./models/user');
 
 app.set('view engine', 'pug');
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -22,11 +23,25 @@ app.use(errorController.get404Page);
 
 Product.belongsTo(Category, { foreignKey: { allowNull: false } });
 Category.hasMany(Product);
-//Product.hasOne(Category);
 
-sequelize.sync()
-    //.sync({ force: true })
+Product.belongsTo(User);
+User.hasMany(User);
+
+sequelize.sync({ force: true })
     .then(() => {
+        User.findByPk(1).then(user => {
+            if (!user) {
+                User.create({
+                    name: 'savas.ev',
+                    email: 'savas.ev@outlook.com'
+                });
+
+                return user;
+            }
+        }).then(user => {
+
+        });
+
         Category.count().then(count => {
             if (count === 0) {
                 Category.bulkCreate([
