@@ -57,19 +57,9 @@ sequelize.sync({ force: true })
                             { name: 'Ekran Kartı Soğutucusu', description: 'Özellikle overclock için GPU soğutma çözümleri.' },
                             { name: 'Kasa Fanı', description: 'Kasada hava sirkülasyonunu sağlayan fanlar.' },
                             { name: 'RGB Fan / Aydınlatma', description: 'Estetik görünüm için kullanılan LED’li fan ve şerit aydınlatmalar.' },
-                            { name: 'Monitör', description: 'Bilgisayarın görsel çıktısını sunan ekran birimi.' },
-                            { name: 'Klavye', description: 'Giriş birimi, mekanik ve membran seçenekleriyle.' },
-                            { name: 'Mouse', description: 'İmleç kontrolü sağlayan giriş birimi.' },
-                            { name: 'Kulaklık / Hoparlör', description: 'Ses çıkışı sağlayan çevresel donanım birimleri.' },
                             { name: 'Termal Macun', description: 'İşlemci ve soğutucu arasında ısı iletimi sağlayan malzeme.' },
                             { name: 'M.2 SSD', description: 'Yeni nesil yüksek hızlı depolama birimi.' },
-                            { name: 'Wi-Fi / Bluetooth Kartı', description: 'Kablosuz bağlantı için gerekli ek kartlar.' },
                             { name: 'Optik Sürücü (DVD/CD)', description: 'Disk okuma-yazma birimi (artık isteğe bağlı).' },
-                            { name: 'Yedek Parçalar / Aksesuarlar', description: 'Kablo, adaptör, vida setleri gibi ek parçalar.' },
-                            { name: 'İşlemci Termal Çözümleri', description: 'Custom loop sıvı soğutma, fan setleri vs.' },
-                            { name: 'Overclock Aksesuarları', description: 'Performans arttırma için özel ekipmanlar.' },
-                            { name: 'UPS / Güç Koruma', description: 'Elektrik kesintilerine karşı koruma sağlayan cihazlar.' },
-                            { name: 'Montaj Hizmeti', description: 'Toplama ve test işlemlerini kapsayan hizmet kategorisi.' },
                         ];
 
                         Category.bulkCreate(categories);
@@ -116,6 +106,13 @@ sequelize.sync({ force: true })
                             { name: 'Crucial P5 Plus 2TB', price: 3700, image: 'product24.jpg', description: 'Uygun fiyatlı NVMe SSD', categoryId: 5 },
                             { name: 'Kingston NV2 M.2 1TB', price: 2800, image: 'product25.jpg', description: 'Ekonomik M.2 SSD', categoryId: 5 },
 
+                            // Case (categoryId:6)
+                            { name: 'MSI MAG Forge 320R Airflow', price: 4266, image: 'product121.jpg', description: '4×120 mm ARGB fanlı mid‑tower kasa', categoryId: 6 },
+                            { name: 'MSI MAG Pano M100R PZ White', price: 4624, image: 'product122.jpg', description: '3×120 mm ARGB fan, temperli cam matx kasa', categoryId: 6 },
+                            { name: 'Corsair 3000D RGB', price: 2793, image: 'product123.jpg', description: 'Airflow RGB kabin, geniş iç hacim', categoryId: 6 },
+                            { name: 'Fractal Design Meshify 2 Compact', price: 24200, image: 'product124.jpg', description: 'Mesh panel, sessiz ve yüksek hava akışlı kasa', categoryId: 6 },
+                            { name: 'Revenge Nova 3 ARGB', price: 1816, image: 'product125.jpg', description: '3×ARGB fanlı uygun fiyatlı gaming kasa', categoryId: 6 },
+
                             // CPU Cooler (categoryId:8)
                             { name: 'Cooler Master Hyper 212 Halo Black', price: 2167, image: 'product101.jpg', description: 'Intel 1700/1851/AM5 uyumlu hava soğutucu 120 mm fan', categoryId: 8 },
                             { name: 'Cooler Master Hyper 212 Spectrum V3', price: 1797, image: 'product102.jpg', description: 'ARGB fanlı değer odaklı CPU soğutucu', categoryId: 8 },
@@ -143,14 +140,6 @@ sequelize.sync({ force: true })
                             { name: 'Phanteks NEON Digital-RGB Kit', price: 550, image: 'product118.jpg', description: 'Dinamik RGB şerit kiti', categoryId: 11 },
                             { name: 'NZXT Hue 2 RGB Lighting Kit', price: 800, image: 'product119.jpg', description: 'RGB kontrol yazılım destekli kit', categoryId: 11 },
                             { name: 'Lian Li Strimer Plus ARGB Cable', price: 650, image: 'product120.jpg', description: 'ARGB kablo ve güç aydınlatma modülü', categoryId: 11 },
-
-                            // Case (categoryId:6)
-                            { name: 'MSI MAG Forge 320R Airflow', price: 4266, image: 'product121.jpg', description: '4×120 mm ARGB fanlı mid‑tower kasa', categoryId: 6 },
-                            { name: 'MSI MAG Pano M100R PZ White', price: 4624, image: 'product122.jpg', description: '3×120 mm ARGB fan, temperli cam matx kasa', categoryId: 6 },
-                            { name: 'Corsair 3000D RGB', price: 2793, image: 'product123.jpg', description: 'Airflow RGB kabin, geniş iç hacim', categoryId: 6 },
-                            { name: 'Fractal Design Meshify 2 Compact', price: 24200, image: 'product124.jpg', description: 'Mesh panel, sessiz ve yüksek hava akışlı kasa', categoryId: 6 },
-                            { name: 'Revenge Nova 3 ARGB', price: 1816, image: 'product125.jpg', description: '3×ARGB fanlı uygun fiyatlı gaming kasa', categoryId: 6 },
-
                         ]
 
                         const userId = user.id;
