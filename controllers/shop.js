@@ -55,26 +55,24 @@ exports.getProduct = (req, res, next) => {
 exports.getProductsByCategory = (req, res, next) => {
     const categoryId = req.params.categoryId;
 
-    Product.findAll(
-    {
-        where: { categoryId: categoryId },
-        attributes: ['id', 'name', 'price', 'image' ]
-    })
-        .then(products => {
-            Category.findAll()
-                .then(categories => {
-                    res.render('shop/products', {
-                        title: 'Products',
-                        products: products,
-                        categories: categories,
-                        selectedCategoryId: categoryId,
-                        path: '/products'
-                    });
-                }).catch(err => {
-                    console.log(err);
-                });
-        }).catch(err => {
-            console.log(err);
+    Category.findAll()
+        .then(categories => {
+            const category = categories.find(x => x.id == categoryId);
+            return category.getProducts().then(products => {
+                return { products, categories };
+            });
+        })
+        .then(({ products, categories }) => {
+            res.render('shop/products', {
+                title: 'Products',
+                products: products,
+                categories: categories,
+                selectedCategoryId: categoryId,
+                path: '/products'
+            });
+        })
+        .catch(err => {
+            console.log(err); // hata loglama unutulmasın
         });
 };
 
