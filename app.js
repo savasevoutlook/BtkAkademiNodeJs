@@ -49,7 +49,7 @@ Product.belongsToMany(Cart, { through: CartItem });
 
 sequelize.sync()
     .then(() => {
-        User.findOne({ where: { email: 'savas.ev@outlook.com' } })
+        User.findOne({ where: { email: 'savas.ev@example.com' } })
             .then(user => {
                 if (!user) {
                     return User.create({
