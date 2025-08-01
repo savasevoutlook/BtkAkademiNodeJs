@@ -91,9 +91,54 @@ exports.getCart = (req, res, next) => {
 };
 
 exports.postCart = (req, res, next) => {
+    const productId = req.body.productId;
+    let quantity = 1;
+    let currentCart;
 
-    
+    req.user.getCart()
+        .then(cart => {
+            if (!cart) {
+                return req.user.createCart();
+            }
 
+            return cart;
+        })
+        .then(cart => {
+            currentCart = cart;
+            return cart.getProducts({ where: { id: productId } });
+        })
+        .then(products => {
+            let product;
+
+            if (products.length > 0) {
+                product = products[0];
+            }
+
+            if (product) {
+                quantity += product.cartItem.quantity;
+                return product;
+            }
+
+            return Product.findByPk(productId);
+        })
+        .then(product => {
+            if (!product) {
+                throw new Error('Product not found');
+            }
+
+            currentCart.addProduct(product, {
+                through: {
+                    quantity: quantity
+                }
+            });
+        })
+        .then(() => {
+            res.redirect('/cart');
+        })
+        .catch(err => {
+            console.log(err);
+            res.redirect('/');
+        });
 };
 
 exports.getOrders = (req, res, next) => {

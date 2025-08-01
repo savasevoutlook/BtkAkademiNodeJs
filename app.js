@@ -15,7 +15,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use((req, res, next) => {
-    User.findOne({ where: { email: 'savas.ev@outlook.com' } })
+    User.findOne({ where: { email: 'savas.ev@example.com' } })
         .then(user => {
             req.user = user;
             next();
@@ -54,7 +54,7 @@ sequelize.sync()
                 if (!user) {
                     return User.create({
                         name: 'savas.ev',
-                        email: 'savas.ev@outlook.com'
+                        email: 'savas.ev@example.com'
                     });
                 }
 

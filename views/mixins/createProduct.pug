@@ -9,5 +9,8 @@ mixin createProduct(product)
                     i.fas.fa-lira-sign #{product.price} TL
 
             .card-footer.text-center
-                a.btn.btn-sm.btn-outline-danger(href=`/addtocart/${product.id}`) Add to Cart
+
+                form(action='/cart', method='POST')
+                    input(type='hidden', name='productId', value=`${product.id}`)
+                    button(type='submit').btn.btn-sm.btn-outline-danger Add to Cart
                 
