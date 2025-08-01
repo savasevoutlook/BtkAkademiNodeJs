@@ -7,6 +7,8 @@ const sequelize = require('./utility/database');
 const Product = require('./models/product');
 const Category = require('./models/category');
 const User = require('./models/user');
+const Cart = require('./models/cart');
+const CartItem = require('./models/cartItem');
 
 app.set('view engine', 'pug');
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -30,6 +32,7 @@ const shopRoutes = require('./routes/shop');
 app.use(shopRoutes);
 
 const errorController = require('./controllers/errors');
+
 app.use(errorController.get404Page);
 
 Product.belongsTo(Category, { foreignKey: { allowNull: false } });
@@ -37,6 +40,12 @@ Category.hasMany(Product);
 
 Product.belongsTo(User);
 User.hasMany(Product);
+
+User.hasOne(Cart);
+Cart.belongsTo(User);
+
+Cart.belongsToMany(Product,  { through: CartItem });
+Product.belongsToMany(Cart, { through: CartItem });
 
 sequelize.sync({ force: true })
     .then(() => {

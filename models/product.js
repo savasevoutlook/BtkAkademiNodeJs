@@ -23,14 +23,6 @@ const Product = sequelize.define('product', {
     description: {
         type: DataTypes.TEXT,
         allowNull: true
-    },
-    categoryId: {
-        type: DataTypes.INTEGER,
-        allowNull: false
-    },
-    userId: {
-        type: DataTypes.INTEGER,
-        allowNull: false
     }
 });
 
