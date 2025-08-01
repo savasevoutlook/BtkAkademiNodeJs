@@ -72,7 +72,7 @@ exports.getProductsByCategory = (req, res, next) => {
             });
         })
         .catch(err => {
-            console.log(err); // hata loglama unutulmasın
+            console.log(err);
         });
 };
 
