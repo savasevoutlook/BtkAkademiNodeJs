@@ -24,6 +24,13 @@ block content
                                 input(type='hidden', name='productId', value=`${product.id}`)
                                 button(type='submit').btn.btn-outline-danger.btn-sm
                                     i.fa.fa-times
+            tfoot
+                tr 
+                    td(colspan="4")
+                        - var total = 0;
+                        each product in products
+                            - total += (product.price * product.cartItem.quantity)
+                    td.text-center #{total} TL
     else
         .col-md-12
             h2 No Products Available
