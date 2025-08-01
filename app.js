@@ -47,7 +47,7 @@ Cart.belongsTo(User);
 Cart.belongsToMany(Product,  { through: CartItem });
 Product.belongsToMany(Cart, { through: CartItem });
 
-sequelize.sync({ force: true })
+sequelize.sync()
     .then(() => {
         User.findOne({ where: { email: 'savas.ev@outlook.com' } })
             .then(user => {
