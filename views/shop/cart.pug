@@ -31,6 +31,9 @@ block content
                         each product in products
                             - total += (product.price * product.cartItem.quantity)
                     td.text-center #{total} TL
+        .text-center 
+            a(href="/").btn.btn-primary Alışverişe Devam Et
+            a(href="/checkout").btn.btn-primary.ml-2 Alışverişi Tamamla
     else
         .col-md-12
             h2 No Products Available
