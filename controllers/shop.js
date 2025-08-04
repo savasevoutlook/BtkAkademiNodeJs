@@ -144,6 +144,19 @@ exports.postCart = (req, res, next) => {
         });
 };
 
+exports.postCartItemDelete = (req, res, next) => {
+    const productId = req.body.productId;
+
+    req.user.getCart()
+        .then(cart => {
+            if (!cart) {
+                throw new Error('Cart not found');
+            }
+
+            return cart.getProducts();
+        });
+};
+
 exports.getOrders = (req, res, next) => {
     res.render('shop/orders', {
         title: 'Your Orders',   
