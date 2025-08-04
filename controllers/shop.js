@@ -132,7 +132,7 @@ exports.postCart = (req, res, next) => {
                 throw new Error('Product not found');
             }
 
-            currentCart.addProduct(product, {
+            return currentCart.addProduct(product, {
                 through: {
                     quantity: quantity
                 }
@@ -175,4 +175,45 @@ exports.getOrders = (req, res, next) => {
         title: 'Your Orders',   
         path: '/orders'
     });
+};
+
+exports.postOrder = (req, res, next) => {
+    let userCart;
+
+    req.user.getCart()
+        .then(cart => {
+            if (!cart) {
+                return res.redirect('/cart');
+            }
+
+            userCart = cart;
+            return cart.getProducts()
+        })
+        .then(products => {
+            if (products.length === 0) {
+                return res.redirect('/cart');
+            }
+
+            return req.user.createOrder()
+                .then(order => {
+                    return order.addProducts(products.map(product => {
+                        product.orderItem = {
+                            quantity: product.cartItem.quantity,
+                            price: product.price
+                        };
+
+                        return product;
+                    }));
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+        })
+        .then(() => {
+            return userCart.setProducts(null);
+        })
+        .then(() => {
+            res.redirect('/orders');
+        })
+        .catch(err => { console.log(err) });
 };
