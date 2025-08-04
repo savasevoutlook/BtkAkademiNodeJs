@@ -79,18 +79,21 @@ exports.getProductsByCategory = (req, res, next) => {
 exports.getCart = (req, res, next) => {
     req.user.getCart()
         .then(cart => {
-            return cart.getProducts().then(products => {
-
-                console.log(products);
-
-                res.render('shop/cart', {
-                    title: 'Cart',
-                    path: '/cart',
-                    products: products
+            return cart.getProducts()
+                .then(products => {
+                    res.render('shop/cart', {
+                        title: 'Cart',
+                        path: '/cart',
+                        products: products
+                    });
+                })
+                .catch(err => {
+                    console.log(err);
                 });
-            }).catch(err => { console.log(err); });
         })
-        .catch(err => { console.log(err); });
+        .catch(err => {
+            console.log(err);
+        });
 };
 
 exports.postCart = (req, res, next) => {
