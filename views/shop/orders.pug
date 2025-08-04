@@ -1,5 +1,39 @@
 extends ../layouts/main-layout.pug
 
 block content
+    if orders.length > 0
+        each order in orders 
+            .card.mb-5 
+                .card-header
+                    h5 Order Id: ##{order.id}
+                .card-body
+                    table.table.table-sm.table-bordered
+                        thead.thead-dark
+                            tr 
+                                th.text-center Image 
+                                th Product Name
+                                th.text-center Price
+                                th.text-center Quantity 
+                        tbody
+                            each product in order.products 
+                                tr 
+                                    td.text-center.align-middle
+                                        img(src=`/img/${product.image}`, alt=`${product.name}`, style='width: 80px;')
+                                    td.align-middle #{product.name}
+                                    td.text-center.align-middle #{parseFloat(product.orderItem.price).toFixed(2)} TL
+                                    td.text-center.align-middle #{product.orderItem.quantity}
 
-    
+                        - var total = 0;
+                        each product in order.products
+                            - total += (product.price * product.orderItem.quantity)
+                        tfoot
+                            tr 
+                                td
+                                td(colspan="1").align-middle Sipariş Tarihi #{order.createdAt.toDateString()}
+                                td.text-center.align-middle Toplam:
+                                    br
+                                    span #{total.toFixed(2)} TL
+                                td
+
+    else 
+        h1 No Orders
