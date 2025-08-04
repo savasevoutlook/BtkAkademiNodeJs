@@ -150,10 +150,20 @@ exports.postCartItemDelete = (req, res, next) => {
     req.user.getCart()
         .then(cart => {
             if (!cart) {
-                throw new Error('Cart not found');
+                res.redirect('/cart');
             }
 
-            return cart.getProducts();
+            return cart.getProducts({ where: { id: productId } });
+        })
+        .then(products => {
+            const product = products[0];
+            return product.cartItem.destroy();
+        })
+        .then(() => {
+            res.redirect('/cart');
+        })
+        .catch(err => {
+            console.log(err);
         });
 };
 
