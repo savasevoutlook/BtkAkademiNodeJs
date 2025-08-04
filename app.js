@@ -55,7 +55,7 @@ User.hasMany(Order);
 Order.belongsToMany(Product, { through: OrderItem });
 Product.belongsToMany(Order, { through: OrderItem });
 
-sequelize.sync()
+sequelize.sync({ force: true })
     .then(() => {
         User.findOne({ where: { email: 'savas.ev@example.com' } })
             .then(user => {
