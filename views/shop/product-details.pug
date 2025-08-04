@@ -9,5 +9,8 @@ block content
             hr
             p #{product.description}
             p #{product.price} TL
-            button(type="submit").btn.btn-outline-success
-                i.fa.fa-shopping-cart  Add to Cart
+
+            form(action='/cart', method='POST')
+                input(type='hidden', name='productId', value=`${product.id}`)
+                button(type='submit').btn.btn-outline-danger
+                    i.fa.fa-shopping-cart  Add to Cart
