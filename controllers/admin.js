@@ -1,5 +1,5 @@
 const Product = require("../models/product");
-const Category = require("../models/category");
+//const Category = require("../models/category");
 
 exports.getProducts = (req, res, next) => {
     Product.findAll()
@@ -16,52 +16,46 @@ exports.getProducts = (req, res, next) => {
 };
 
 exports.getAddProduct = (req, res, next) => {
-    Category.findAll({ attributes: ['id', 'name'] })
-        .then(categories => {
-            res.render("admin/add-product", {
-                title: "New Product",
-                categories: categories,
-                path: "/admin/add-product",
-            });
+
+    res.render("admin/add-product", {
+        title: "New Product",
+        //categories: categories,
+        path: "/admin/add-product",
+    });
+};
+
+exports.postAddProduct = (req, res, next) => {
+
+    const name = req.body.name;
+    const price = req.body.price;
+    const image = req.body.image;
+    const description = req.body.description;
+
+    const product = new Product(name, price, description, image);
+
+    product.save()
+        .then(result => {
+            res.redirect("/admin/products");
         })
         .catch(err => {
             console.log(err);
         });
 };
 
-exports.postAddProduct = (req, res, next) => {
-    Product.create({
-        name: req.body.name,
-        price: req.body.price,
-        image: req.body.image,
-        description: req.body.description,
-        categoryId: req.body.categoryId,
-        userId: req.user.id
-    }).then(() => {
-        res.redirect("/admin/products");
-    }).catch(err => {
-        console.log(err);
-    });
-};
-
 exports.getEditProduct = (req, res, next) => {
-    Product.findByPk(req.params.productId)
+    
+    Product.findById(req.params.productId)
         .then(product => {
             if (!product) {
                 return res.redirect('/admin/products');
             }
 
-            Category.findAll({ attributes: ['id', 'name'] })
-                .then(categories => {
-                    res.render("admin/edit-product", {
-                        title: "Edit Product",
-                        product: product,
-                        categories: categories,
-                        path: "/admin/edit-product",
-                    });
-                }).catch(err => {
-                    console.log(err);
-                });
+            res.render("admin/edit-product", {
+                title: "Edit Product",
+                product: product,
+                //categories: categories,
+                path: "/admin/edit-product",
+            });
         }).catch(err => {
             console.log(err);
         });

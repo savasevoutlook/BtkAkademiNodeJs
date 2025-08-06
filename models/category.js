@@ -1,21 +1,22 @@
-const sequelize = require('../utility/database');
-const { DataTypes } = require('sequelize');
+const getDb = require('../utility/database').getDb;
 
-const Category = sequelize.define('category',{
-    id: {
-        type: DataTypes.INTEGER,
-        autoIncrement: true,
-        allowNull: false,
-        primaryKey: true
-    },
-    name: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
-    description: {
-        type: DataTypes.TEXT,
-        allowNull: true
+class Category {
+    constructor(name, description) {
+        this.name = name;
+        this.description = description;
     }
-});
+
+    static findAll() {
+        const db = getDb();
+
+        return db.collection('categories')
+            .find({})
+            .toArray()
+            .then(categories => {
+                return categories;
+            })
+            .catch(err => console.log(err));
+    }
+}
 
 module.exports = Category;
