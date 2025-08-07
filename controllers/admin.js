@@ -82,7 +82,7 @@ exports.postEditProduct = (req, res, next) => {
 
 exports.postDeleteProduct = (req, res, next) => {
 
-    Product.destroy({ where: { id: req.body.productId } })
+    Product.deleteById(req.body.productId)
         .then(() => {
             res.redirect("/admin/products?action=delete");
         })

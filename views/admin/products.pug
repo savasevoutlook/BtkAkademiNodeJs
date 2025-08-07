@@ -19,17 +19,17 @@ block content
                 table.table.table-striped.table-bordered
                     thead
                         tr
-                            th(style="width: 10%;").text-center Image
+                            th(style='width: 80px;').text-center Image
                             th Name
-                            th Price
+                            th(style='width: 15%;').text-center Price
                             th(style="width: 15%;").text-center Actions
                     tbody
                         each product in products
                             tr
                                 td.text-center
-                                    img(src=`/img/${product.image}`, alt=`${product.name}`, style='width: 100px;')
+                                    img(src=`/img/${product.image}`, alt=`${product.name}`, style='width: 70px;')
                                 td #{product.name}
-                                td #{product.price} TL
+                                td.text-center #{product.price} TL
                                 td.text-center
                                     a.btn.btn-primary.btn-sm(href=`/admin/edit-product/${product._id}`) Edit
 
