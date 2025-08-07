@@ -3,22 +3,46 @@ const app = express();
 const bodyParser = require('body-parser');
 const path = require('path');
 
+const adminRoutes = require('./routes/admin');
+const shopRoutes = require('./routes/shop');
+const errorController = require('./controllers/errors');
+
+const mongoConnect = require('./utility/database').mongoConnect;
+
+const User = require('./models/user');
+
 app.set('view engine', 'pug');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-const adminRoutes = require('./routes/admin');
+app.use((req, res, next) => {
+    User.findByEmail('savas.ev@example.com')
+        .then(user => {
+            if (user) {
+                req.user = new User(user.name, user.email, user._id);
+                next();
+            }
+        })
+        .catch(err => { console.log(err); });
+});
+
 app.use('/admin', adminRoutes);
-
-const shopRoutes = require('./routes/shop');
 app.use(shopRoutes);
-
-const errorController = require('./controllers/errors');
 app.use(errorController.get404Page);
 
-const mongoConnect = require('./utility/database').mongoConnect;
-
 mongoConnect((client) => {
-    app.listen(3000);
-    //console.log(client);
+    User.findByEmail('savas.ev@example.com')
+        .then(user => {
+            if (!user) {
+                user = new User('savas.ev', 'savas.ev@example.com');
+                return user.save();
+            }
+
+            return user;
+        })
+        .then(user => {
+            //console.log(user);
+            app.listen(3000);
+        })
+        .catch(err => { console.log(err); });
 });
