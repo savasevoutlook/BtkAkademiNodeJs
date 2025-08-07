@@ -9,7 +9,7 @@ block content
             h6 Edit Product
         .card-body
             form(action="/admin/edit-product", method="POST")
-                input(type="hidden", name="id", value=`${product.id}`)#id
+                input(type="hidden", name="id", value=`${product._id}`)#id
 
                 .form-group.row
                     label(for="name").col-2.col-form-label Prodcut Name

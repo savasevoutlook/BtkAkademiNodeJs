@@ -10,8 +10,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 const adminRoutes = require('./routes/admin');
 app.use('/admin', adminRoutes);
 
-// const shopRoutes = require('./routes/shop');
-// app.use(shopRoutes);
+const shopRoutes = require('./routes/shop');
+app.use(shopRoutes);
 
 const errorController = require('./controllers/errors');
 app.use(errorController.get404Page);

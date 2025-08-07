@@ -2,23 +2,27 @@ const getDb = require('../utility/database').getDb;
 const { ObjectId } = require('mongodb');
 
 class Product {
-    constructor(name, price, description, image) {
+    constructor(name, price, description, image, id) {
         this.name = name;
         this.price = price;
         this.description = description;
         this.image = image;
+        this._id = id ? new ObjectId(id) : null;
     }
 
     static findAll() {
         const db = getDb();
 
         return db.collection('products')
-            .find({})
+            .find()
+            .project({ name: 1, price: 1, image: 1 }) // or description: 0
             .toArray()
             .then(products => {
                 return products;
             })
-            .catch(err => console.log(err));
+            .catch(err => {
+                console.log(err);
+            });
     }
 
     static findById(productId) {
@@ -39,12 +43,17 @@ class Product {
     }
 
     save() {
-        const db = getDb();
+        let db = getDb();
 
-        db.collection('products')
-            .insertOne(this)
+        if (this._id) {
+            db = db.collection('products').updateOne({ _id: this._id }, { $set: this });
+        } else {
+            db =  db.collection('products').insertOne(this);
+        }
+
+        return db
             .then(result => {
-                //console.log(result);
+                console.log(result);
             })
             .catch(err => {
                 console.log(err);

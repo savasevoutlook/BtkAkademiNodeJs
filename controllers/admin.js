@@ -62,16 +62,16 @@ exports.getEditProduct = (req, res, next) => {
 };
 
 exports.postEditProduct = (req, res, next) => {
-    Product.findByPk(req.body.id)
-        .then((product) => {
-            product.name = req.body.name;
-            product.price = req.body.price;
-            product.image = req.body.image;
-            product.description = req.body.description;
-            product.categoryId = req.body.categoryId;
-            
-            return product.save();
-        })
+
+    const id = req.body.id;
+    const name = req.body.name;
+    const price = req.body.price;
+    const image = req.body.image;
+    const description = req.body.description;
+
+    const product = new Product(name, price, description, image, id);
+
+    product.save()
         .then(() => {
             res.redirect("/admin/products?action=edit");
         })

@@ -4,13 +4,13 @@ mixin createProduct(product)
             img.card-img-top(src=`/img/${product.image}`, alt=product.name)
             .card-body
                 h5.card-title
-                    a(href=`/products/${product.id}`) #{product.name}
+                    a(href=`/products/${product._id}`) #{product.name}
                 small.text-muted
                     i.fas.fa-lira-sign #{product.price} TL
 
             .card-footer.text-center
 
                 form(action='/cart', method='POST')
-                    input(type='hidden', name='productId', value=`${product.id}`)
+                    input(type='hidden', name='productId', value=`${product._id}`)
                     button(type='submit').btn.btn-sm.btn-outline-danger Add to Cart
                 

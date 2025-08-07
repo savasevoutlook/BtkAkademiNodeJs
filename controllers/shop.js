@@ -2,45 +2,35 @@ const Product = require('../models/product');
 const Category = require('../models/category');
 
 exports.getIndex = (req, res, next) => {
-    Product.findAll({ attributes: ['id', 'name', 'price', 'image' ] })
+    Product.findAll()
         .then(products => {
-            Category.findAll()
-                .then(categories => {
-                    res.render('shop/index', {
-                        title: 'Shopping',
-                        products: products,
-                        categories: categories,
-                        path: '/'
-                    }); 
-                }).catch(err => {
-                    console.log(err);
-                });
+            res.render('shop/index', {
+                title: 'Shopping',
+                products: products,
+                //categories: categories,
+                path: '/'
+            });
         }).catch(err => {
             console.log(err);
         });
 };
 
 exports.getProducts = (req, res, next) => {
-    Product.findAll({ attributes: ['id', 'name', 'price', 'image' ] })
+    Product.findAll()
         .then(products => {
-            Category.findAll()
-                .then(categories => {
-                    res.render('shop/products', {
-                        title: 'Products',
-                        products: products,
-                        categories: categories,
-                        path: '/products'
-                    }); 
-                }).catch(err => {
-                    console.log(err);
-                });
+            res.render('shop/products', {
+                title: 'Products',
+                products: products,
+                //categories: categories,
+                path: '/products'
+            }); 
         }).catch(err => {
             console.log(err);
         });
 };
 
 exports.getProduct = (req, res, next) => {
-    Product.findByPk(req.params.productId)
+    Product.findById(req.params.productId)
         .then(product => {
             res.render('shop/product-details', {
                 title: product.name,

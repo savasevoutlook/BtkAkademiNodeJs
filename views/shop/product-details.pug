@@ -11,6 +11,6 @@ block content
             p #{product.price} TL
 
             form(action='/cart', method='POST')
-                input(type='hidden', name='productId', value=`${product.id}`)
+                input(type='hidden', name='productId', value=`${product._id}`)
                 button(type='submit').btn.btn-outline-danger
                     i.fa.fa-shopping-cart  Add to Cart
