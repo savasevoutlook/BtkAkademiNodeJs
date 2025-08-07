@@ -27,5 +27,7 @@ router.get('/edit-category/:categoryId', adminController.getEditCategory);
 
 router.post('/edit-category', adminController.postEditCategory);
 
+router.post('/delete-category', adminController.postDeleteCategory);
+
 
 module.exports = router;

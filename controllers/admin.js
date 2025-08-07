@@ -165,3 +165,14 @@ exports.postEditCategory = (req, res, next) => {
             console.log(err);
         });
 };
+
+exports.postDeleteCategory = (req, res, next) => {
+
+    Category.deleteById(req.body.categoryId)
+        .then(() => {
+            res.redirect("/admin/categories?action=delete");
+        })
+        .catch(err => {
+            console.log(err);
+        });
+};
