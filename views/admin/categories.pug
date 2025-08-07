@@ -1,0 +1,38 @@
+extends ../layouts/main-layout.pug
+
+block content
+    if (action !== undefined)
+        if (action === 'edit')
+            div.alert.alert-success
+                strong The category has been updated.
+                button(type="button", data-dismiss="alert", aria-label="Close").close
+                    span(aria-hidden="true") &#215;
+        else if (action === 'delete')
+            div.alert.alert-success
+                strong The category has been deleted.
+                button(type="button", data-dismiss="alert", aria-label="Close").close
+                    span(aria-hidden="true") &#215;
+    .row
+        if (categories && categories.length > 0)
+            .col-md-12
+                h2 Category List
+                table.table.table-striped.table-bordered
+                    thead
+                        tr
+                            th Name
+                            th Description
+                            th(style="width: 15%;").text-center Actions
+                    tbody
+                        each category in categories
+                            tr
+                                td #{category.name}
+                                td #{category.description}
+                                td.text-center
+                                    a.btn.btn-primary.btn-sm(href=`/admin/edit-category/${category._id}`) Edit
+
+                                    form(action='/admin/delete-category', method='post')
+                                        input(type='hidden', name='categoryId', value=`${category._id}`)
+                                        button(type='submit').btn.btn-danger.btn-sm Delete
+        else
+            .col-md-12
+                h2 No Categories Available

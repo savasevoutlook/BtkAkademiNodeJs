@@ -1,5 +1,6 @@
 const Product = require("../models/product");
-//const Category = require("../models/category");
+const Category = require("../models/category");
+
 
 exports.getProducts = (req, res, next) => {
     Product.findAll()
@@ -16,7 +17,6 @@ exports.getProducts = (req, res, next) => {
 };
 
 exports.getAddProduct = (req, res, next) => {
-
     res.render("admin/add-product", {
         title: "New Product",
         //categories: categories,
@@ -35,7 +35,7 @@ exports.postAddProduct = (req, res, next) => {
     const product = new Product(name, price, description, image, null, userId);
 
     product.save()
-        .then(result => {
+        .then(() => {
             res.redirect("/admin/products");
         })
         .catch(err => {
@@ -91,4 +91,64 @@ exports.postDeleteProduct = (req, res, next) => {
         .catch(err => {
             console.log(err);
         });
+};
+
+
+exports.getCategories = (req, res, next) => {
+    Category.findAll()
+        .then(categories => {
+            res.render("admin/categories", {
+                title: "Admin Categories",
+                categories: categories,
+                path: "/admin/categories",
+                action: req.query.action,
+            });
+        }).catch(err => {
+            console.log(err);
+        });
+};
+
+exports.getAddCategory = (req, res, next) => {
+    res.render("admin/add-category", {
+        title: "New Category",
+        path: "/admin/add-category",
+    });
+};
+
+exports.postAddCategory = (req, res, next) => {
+
+    const name = req.body.name;
+    const description = req.body.description;
+
+    const category = new Category(name, description);
+
+    category.save()
+        .then(() => {
+            res.redirect("/admin/categories");
+        })
+        .catch(err => {
+            console.log(err);
+        });
+};
+
+exports.getEditCategory = (req, res, next) => {
+    
+    Category.findById(req.params.categoryId)
+        .then(category => {
+            if (!category) {
+                return res.redirect('/admin/categories');
+            }
+
+            res.render("admin/edit-category", {
+                title: "Edit Category",
+                category: category,
+                path: "/admin/edit-category",
+            });
+        }).catch(err => {
+            console.log(err);
+        });
+};
+
+exports.postEditCategory = (req, res, next) => {
+
 };

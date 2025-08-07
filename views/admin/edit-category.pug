@@ -1,0 +1,25 @@
+extends ../layouts/main-layout.pug
+
+block styles
+    link(rel="stylesheet", href="/css/forms.css")
+
+block content
+    .card.card-default 
+        .card-header
+            h6 Edit Category
+        .card-body
+            form(action="/admin/edit-category", method="POST")
+                input(type="hidden", name="id", value=`${category._id}`)#id
+
+                .form-group.row
+                    label(for="name").col-2.col-form-label Category Name
+                    .col-10
+                        input.form-control#name(type="text", name="name", value=`${category.name}`, required)
+                .form-group.row
+                    label(for="description").col-2.col-form-label Description
+                    .col-10
+                        textarea.form-control#description(name="description", required) #{category.description}
+                .form-group.row
+                    .col-10.offset-2
+                        button.btn.btn-primary(type="submit") Update
+
