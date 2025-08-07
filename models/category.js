@@ -54,6 +54,19 @@ class Category {
                 console.log(err);
             });
     }
+
+    static deleteById(categoryId) {
+        const db = getDb();
+
+        return db.collection('categories')
+            .deleteOne({ _id: new ObjectId(categoryId) })
+            .then(() => {
+                console.log('deleted');
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    }
 }
 
 module.exports = Category;
