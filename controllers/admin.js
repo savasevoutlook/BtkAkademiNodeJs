@@ -150,5 +150,18 @@ exports.getEditCategory = (req, res, next) => {
 };
 
 exports.postEditCategory = (req, res, next) => {
+    
+    const id = req.body.id;
+    const name = req.body.name;
+    const description = req.body.description;
 
+    const category = new Category(name, description, id);
+
+    category.save()
+        .then(() => {
+            res.redirect("/admin/categories?action=edit");
+        })
+        .catch(err => {
+            console.log(err);
+        });
 };
