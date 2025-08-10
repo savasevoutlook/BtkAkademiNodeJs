@@ -17,11 +17,18 @@ exports.getProducts = (req, res, next) => {
 };
 
 exports.getAddProduct = (req, res, next) => {
-    res.render("admin/add-product", {
-        title: "New Product",
-        //categories: categories,
-        path: "/admin/add-product",
-    });
+
+    Category.findAll()
+        .then(categories => {
+            res.render("admin/add-product", {
+                title: "New Product",
+                categories: categories,
+                path: "/admin/add-product",
+            });
+        })
+        .catch(err => {
+            console.log(err);
+        });
 };
 
 exports.postAddProduct = (req, res, next) => {
