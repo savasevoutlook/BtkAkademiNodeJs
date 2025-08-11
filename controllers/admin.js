@@ -38,8 +38,9 @@ exports.postAddProduct = (req, res, next) => {
     const image = req.body.image;
     const description = req.body.description;
     const userId = req.user._id;
+    const categories = req.body.categoryIds;
 
-    const product = new Product(name, price, description, image, null, userId);
+    const product = new Product(name, price, description, image, categories, null, userId);
 
     product.save()
         .then(() => {
@@ -58,12 +59,18 @@ exports.getEditProduct = (req, res, next) => {
                 return res.redirect('/admin/products');
             }
 
-            res.render("admin/edit-product", {
-                title: "Edit Product",
-                product: product,
-                //categories: categories,
-                path: "/admin/edit-product",
-            });
+            Category.findAll()
+                .then(categories => {
+                    res.render("admin/edit-product", {
+                        title: "Edit Product",
+                        product: product,
+                        categories: categories,
+                        path: "/admin/edit-product",
+                    });
+                })
+                .catch(err => {
+                    console.log(err);
+                });
         }).catch(err => {
             console.log(err);
         });
@@ -77,8 +84,9 @@ exports.postEditProduct = (req, res, next) => {
     const image = req.body.image;
     const description = req.body.description;
     const userId = req.user._id;
+    const categories = req.body.categoryIds;
 
-    const product = new Product(name, price, description, image, id, userId);
+    const product = new Product(name, price, description, image, categories, id, userId);
 
     product.save()
         .then(() => {

@@ -12,7 +12,7 @@ class Category {
         const db = getDb();
 
         return db.collection('categories')
-            .find({})
+            .find()
             .toArray()
             .then(categories => {
                 return categories;
