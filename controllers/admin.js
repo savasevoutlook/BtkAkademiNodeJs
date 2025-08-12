@@ -61,6 +61,19 @@ exports.getEditProduct = (req, res, next) => {
 
             Category.findAll()
                 .then(categories => {
+                    
+                    categories = categories.map(category => {
+                        if (product.categories) {
+                            product.categories.find(item => {
+                                if (item == category._id) {
+                                    category.selected = true;
+                                }
+                            });
+                        }
+
+                        return category;
+                    });                    
+
                     res.render("admin/edit-product", {
                         title: "Edit Product",
                         product: product,

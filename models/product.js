@@ -7,7 +7,7 @@ class Product {
         this.price = price;
         this.description = description;
         this.image = image;
-        this.categories = categories;
+        this.categories = (categories && !Array.isArray(categories)) ? Array.of(categories) : categories;
         this._id = id ? new ObjectId(id) : null;
         this.userId = userId;
     }
