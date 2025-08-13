@@ -17,7 +17,9 @@ class Category {
             .then(categories => {
                 return categories;
             })
-            .catch(err => console.log(err));
+            .catch(err => {
+                console.log(err);
+            });
     }
 
     static findById(categoryId) {
@@ -47,8 +49,8 @@ class Category {
         }
 
         return db
-            .then(result => {
-                console.log(result);
+            .then(() => {
+                console.log('saved');
             })
             .catch(err => {
                 console.log(err);

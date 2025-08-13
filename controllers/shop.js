@@ -79,18 +79,12 @@ exports.getProductsByCategory = (req, res, next) => {
 
 exports.getCart = (req, res, next) => {
     req.user.getCart()
-        .then(cart => {
-            return cart.getProducts()
-                .then(products => {
-                    res.render('shop/cart', {
-                        title: 'Cart',
-                        path: '/cart',
-                        products: products
-                    });
-                })
-                .catch(err => {
-                    console.log(err);
-                });
+        .then(products => {
+            res.render('shop/cart', {
+                title: 'Cart',
+                path: '/cart',
+                products: products
+            });
         })
         .catch(err => {
             console.log(err);
@@ -99,52 +93,16 @@ exports.getCart = (req, res, next) => {
 
 exports.postCart = (req, res, next) => {
     const productId = req.body.productId;
-    let quantity = 1;
-    let currentCart;
 
-    req.user.getCart()
-        .then(cart => {
-            if (!cart) {
-                return req.user.createCart();
-            }
-
-            return cart;
-        })
-        .then(cart => {
-            currentCart = cart;
-            return cart.getProducts({ where: { id: productId } });
-        })
-        .then(products => {
-            let product;
-
-            if (products.length > 0) {
-                product = products[0];
-            }
-
-            if (product) {
-                quantity += product.cartItem.quantity;
-                return product;
-            }
-
-            return Product.findByPk(productId);
-        })
+    Product.findById(productId)
         .then(product => {
-            if (!product) {
-                throw new Error('Product not found');
-            }
-
-            return currentCart.addProduct(product, {
-                through: {
-                    quantity: quantity
-                }
-            });
+            return req.user.addToCart(product);
         })
         .then(() => {
             res.redirect('/cart');
         })
         .catch(err => {
             console.log(err);
-            res.redirect('/');
         });
 };
 

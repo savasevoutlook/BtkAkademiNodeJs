@@ -19,7 +19,7 @@ app.use((req, res, next) => {
     User.findByEmail('savas.ev@example.com')
         .then(user => {
             if (user) {
-                req.user = new User(user.name, user.email, user._id);
+                req.user = new User(user.name, user.email, user.cart, user._id);
                 next();
             }
         })
@@ -40,8 +40,7 @@ mongoConnect((client) => {
 
             return user;
         })
-        .then(user => {
-            //console.log(user);
+        .then(() => {
             app.listen(3000);
         })
         .catch(err => { console.log(err); });

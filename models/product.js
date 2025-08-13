@@ -55,7 +55,7 @@ class Product {
 
         return db
             .then(result => {
-                console.log(result);
+                console.log('saved');
             })
             .catch(err => {
                 console.log(err);
