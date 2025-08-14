@@ -21,7 +21,36 @@ class User {
     }
 
     addToCart(product) {
+        const index = this.cart.items.findIndex(cp => {
+            return cp.productId.toString() === product._id.toString()
+        });
 
+        const cartItems = [...this.cart.items];
+
+        let itemQuantity = 1;
+
+        if (index >= 0) {
+            itemQuantity = cartItems[index].quantity + 1;
+            cartItems[index].quantity = itemQuantity;
+        } else {
+            cartItems.push({
+                productId: new ObjectId(product._id),
+                quantity: itemQuantity
+            });
+        }
+
+        const db = getDb();
+        return db.collection('users')
+            .updateOne(
+                { _id: new ObjectId(this._id) },
+                {
+                    $set: {
+                        cart: {
+                            items: cartItems
+                        }
+                    }
+                }
+            );
     }
 
     static findById(userId) {
