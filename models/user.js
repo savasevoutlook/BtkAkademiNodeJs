@@ -17,7 +17,32 @@ class User {
     }
 
     getCart() {
-        
+        const ids = this.cart.items.map(i => {
+            return i.productId;
+        });
+
+        const db = getDb();
+
+        return db.collection('products')
+            .find({
+                _id: {
+                    $in: ids
+                }
+            })
+            .toArray()
+            .then(products => {
+                return products.map(p => {
+                    return {
+                        ...p,
+                        quantity: this.cart.items.find(i => {
+                            return i.productId.toString() === p._id.toString()
+                        }).quantity
+                    };
+                });
+            })
+            .catch(err => {
+                console.log(err);
+            });
     }
 
     addToCart(product) {
@@ -25,15 +50,15 @@ class User {
             return cp.productId.toString() === product._id.toString()
         });
 
-        const cartItems = [...this.cart.items];
+        const updatedCartItems = [...this.cart.items];
 
         let itemQuantity = 1;
 
         if (index >= 0) {
-            itemQuantity = cartItems[index].quantity + 1;
-            cartItems[index].quantity = itemQuantity;
+            itemQuantity = this.cart.items[index].quantity + 1;
+            updatedCartItems[index].quantity = itemQuantity;
         } else {
-            cartItems.push({
+            updatedCartItems.push({
                 productId: new ObjectId(product._id),
                 quantity: itemQuantity
             });
@@ -46,7 +71,7 @@ class User {
                 {
                     $set: {
                         cart: {
-                            items: cartItems
+                            items: updatedCartItems
                         }
                     }
                 }
