@@ -133,6 +133,18 @@ exports.getOrders = (req, res, next) => {
 };
 
 exports.postOrder = (req, res, next) => {
+    req.user
+        .addOrder()
+        .then(() => {
+
+
+            res.redirect('/orders');
+        })
+        .catch(err => {
+            console.log(err);
+        });
+
+    /*
     let userCart;
 
     req.user.getCart()
@@ -171,4 +183,5 @@ exports.postOrder = (req, res, next) => {
             res.redirect('/orders');
         })
         .catch(err => { console.log(err) });
+    */
 };

@@ -123,6 +123,56 @@ class User {
                 }
             );
     }
+
+    getOrders() {
+
+    }
+
+    addOrder() {
+        const db = getDb();
+
+        return this.getCart()
+            .then(products => {
+
+                const order = {
+                    items: products.map(item => {
+                        return {
+                            _id: item._id,
+                            name: item.name,
+                            price: item.price,
+                            image: item.image,
+                            userId: item.userId,
+                            quantity: item.quantity
+                        };
+                    }),
+                    user: {
+                        _id: new ObjectId(this._id),
+                        name: this.name,
+                        email: this.email
+                    },
+                    date: new Date().toLocaleString()
+                };
+
+                return db.collection('orders').insertOne(order);
+            })
+            .then(() => {
+                this.cart = { items: [] };
+                return db.collection('users')
+                    .updateOne(
+                        { _id: new ObjectId(this._id) },
+                        {
+                            $set: {
+                                cart: {
+                                    items: []
+                                }
+                            }
+                        }
+                    );
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    }
 }
 
 module.exports = User;
