@@ -5,7 +5,7 @@ block content
         each order in orders 
             .card.mb-5 
                 .card-header
-                    h5 Order Id: ##{order.id}
+                    h5 Order Id: ##{order._id}
                 .card-body
                     table.table.table-sm.table-bordered
                         thead.thead-dark
@@ -15,21 +15,21 @@ block content
                                 th.text-center Price
                                 th.text-center Quantity 
                         tbody
-                            each product in order.products 
+                            each product in order.items 
                                 tr 
                                     td.text-center.align-middle
                                         img(src=`/img/${product.image}`, alt=`${product.name}`, style='width: 80px;')
                                     td.align-middle #{product.name}
-                                    td.text-center.align-middle #{parseFloat(product.orderItem.price).toFixed(2)} TL
-                                    td.text-center.align-middle #{product.orderItem.quantity}
+                                    td.text-center.align-middle #{parseFloat(product.price).toFixed(2)} TL
+                                    td.text-center.align-middle #{product.quantity}
 
                         - var total = 0;
-                        each product in order.products
-                            - total += (product.price * product.orderItem.quantity)
+                        each product in order.items
+                            - total += (product.price * product.quantity)
                         tfoot
                             tr 
                                 td
-                                td(colspan="1").align-middle Sipariş Tarihi #{order.createdAt.toDateString()}
+                                td(colspan="1").align-middle Sipariş Tarihi #{order.date}
                                 td.text-center.align-middle Toplam:
                                     br
                                     span #{total.toFixed(2)} TL
