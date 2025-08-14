@@ -103,6 +103,26 @@ class User {
                 console.log(err);
             });
     }
+
+    deleteCartItem(productId) {
+        const cartItems = this.cart.items.filter(item => {
+            return item.productId.toString() !== productId.toString()
+        });
+
+        const db = getDb();
+
+        return db.collection('users')
+            .updateOne(
+                { _id: new ObjectId(this._id) },
+                {
+                    $set: {
+                        cart: {
+                            items: cartItems
+                        }
+                    }
+                }
+            );
+    }
 }
 
 module.exports = User;
