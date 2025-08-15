@@ -17,30 +17,26 @@ exports.getProducts = (req, res, next) => {
 };
 
 exports.getAddProduct = (req, res, next) => {
-
-    Category.findAll()
-        .then(categories => {
-            res.render("admin/add-product", {
-                title: "New Product",
-                categories: categories,
-                path: "/admin/add-product",
-            });
-        })
-        .catch(err => {
-            console.log(err);
-        });
+    res.render("admin/add-product", {
+        title: "New Product",
+        path: "/admin/add-product",
+    });
 };
 
 exports.postAddProduct = (req, res, next) => {
-
     const name = req.body.name;
     const price = req.body.price;
     const image = req.body.image;
     const description = req.body.description;
-    const userId = req.user._id;
-    const categories = req.body.categoryIds;
+    // const userId = req.user._id;
+    // const categories = req.body.categoryIds;
 
-    const product = new Product(name, price, description, image, categories, null, userId);
+    const product = new Product({
+        name: name,
+        price: price,
+        description: description,
+        image: image,
+    });
 
     product.save()
         .then(() => {

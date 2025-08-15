@@ -25,13 +25,13 @@ block content
                     label(for="description").col-2.col-form-label Description
                     .col-10
                         textarea.form-control#description(name="description", required)
-                .form-group.row
-                    label(for="categoryIds").col-2.col-form-label Category
-                    .col-10
-                        each category in categories 
-                            .form-group.form-check
-                                input.form-check-input(type="checkbox", name="categoryIds", id=`${category._id}`, value=`${category._id}`)
-                                label.form-check-label(for=`${category._id}`) #{category.name}
+                //- .form-group.row
+                //-     label(for="categoryIds").col-2.col-form-label Category
+                //-     .col-10
+                //-         each category in categories 
+                //-             .form-group.form-check
+                //-                 input.form-check-input(type="checkbox", name="categoryIds", id=`${category._id}`, value=`${category._id}`)
+                //-                 label.form-check-label(for=`${category._id}`) #{category.name}
                 .form-group.row
                     .col-10.offset-2
                         button.btn.btn-primary(type="submit") Save
