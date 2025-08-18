@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const path = require('path');
 
 const adminRoutes = require('./routes/admin');
-//const shopRoutes = require('./routes/shop');
+const shopRoutes = require('./routes/shop');
 const errorController = require('./controllers/errors');
 //const User = require('./models/user');
 
@@ -26,7 +26,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 const mongoose = require('mongoose');
 
 app.use('/admin', adminRoutes);
-//app.use(shopRoutes);
+app.use(shopRoutes);
 app.use(errorController.get404Page);
 
 // mongoConnect((client) => {

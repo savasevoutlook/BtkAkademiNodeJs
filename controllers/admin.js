@@ -3,7 +3,10 @@ const Category = require("../models/category");
 
 
 exports.getProducts = (req, res, next) => {
-    Product.findAll()
+    Product.find()
+        //.limit(10)
+        .sort({ name: 1})
+        .select({ description: 0 }) 
         .then(products => {
             res.render("admin/products", {
                 title: "Admin Products",
@@ -49,15 +52,14 @@ exports.postAddProduct = (req, res, next) => {
 
 exports.getEditProduct = (req, res, next) => {
     
-    Product.findById(req.params.productId)
+    Product.findOne({ _id: req.params.productId })
         .then(product => {
             if (!product) {
                 return res.redirect('/admin/products');
             }
 
-            Category.findAll()
+            Category.find()
                 .then(categories => {
-                    
                     categories = categories.map(category => {
                         if (product.categories) {
                             product.categories.find(item => {
@@ -66,7 +68,6 @@ exports.getEditProduct = (req, res, next) => {
                                 }
                             });
                         }
-
                         return category;
                     });                    
 
@@ -92,12 +93,16 @@ exports.postEditProduct = (req, res, next) => {
     const price = req.body.price;
     const image = req.body.image;
     const description = req.body.description;
-    const userId = req.user._id;
-    const categories = req.body.categoryIds;
 
-    const product = new Product(name, price, description, image, categories, id, userId);
-
-    product.save()
+    Product.updateOne({ _id: id },
+        {
+            $set: {
+                name: name,
+                price: price,
+                image: image,
+                description: description,
+            }
+        })
         .then(() => {
             res.redirect("/admin/products?action=edit");
         })
@@ -119,7 +124,7 @@ exports.postDeleteProduct = (req, res, next) => {
 
 
 exports.getCategories = (req, res, next) => {
-    Category.findAll()
+    Category.find()
         .then(categories => {
             res.render("admin/categories", {
                 title: "Admin Categories",
@@ -157,7 +162,7 @@ exports.postAddCategory = (req, res, next) => {
 
 exports.getEditCategory = (req, res, next) => {
     
-    Category.findById(req.params.categoryId)
+    Category.findOne({ _id: req.params.categoryId })
         .then(category => {
             if (!category) {
                 return res.redirect('/admin/categories');
