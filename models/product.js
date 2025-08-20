@@ -20,10 +20,11 @@ const productSchema = new mongoose.Schema({
         type: Date,
         default: Date.now,
     },
-    isActive: {
-        type: Boolean,
-        default: true,
-    },
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User', // Reference to the User model
+        required: true,
+    }
 });
 
 module.exports = mongoose.model('Product', productSchema); //products
