@@ -1,5 +1,6 @@
 const Product = require("../models/product");
 const Category = require("../models/category");
+const category = require("../models/category");
 
 
 exports.getProducts = (req, res, next) => {
@@ -31,7 +32,6 @@ exports.postAddProduct = (req, res, next) => {
     const price = req.body.price;
     const image = req.body.image;
     const description = req.body.description;
-    // const categories = req.body.categoryIds;
 
     const product = new Product({
         name: name,
@@ -195,12 +195,16 @@ exports.postEditCategory = (req, res, next) => {
     const name = req.body.name;
     const description = req.body.description;
 
-    Category.updateOne({ _id: id },
-        {
-            $set: {
-                name: name,
-                description: description,
+    Category.findById(id)
+        .then(category => {
+            if (!category) {
+                return res.redirect('/admin/categories');
             }
+
+            category.name = name;
+            category.description = description;
+
+            return category.save();
         })
         .then(() => {
             res.redirect("/admin/categories?action=edit");
