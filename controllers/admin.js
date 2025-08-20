@@ -8,9 +8,6 @@ exports.getProducts = (req, res, next) => {
         .select('name price userId image')
         .sort({ name: 1})
         .then(products => {
-
-            console.log(products);
-
             res.render("admin/products", {
                 title: "Admin Products",
                 products: products,
