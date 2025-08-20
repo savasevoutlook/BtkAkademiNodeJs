@@ -157,7 +157,10 @@ exports.postAddCategory = (req, res, next) => {
     const name = req.body.name;
     const description = req.body.description;
 
-    const category = new Category(name, description);
+    const category = new Category({
+        name: name,
+        description: description,
+    });
 
     category.save()
         .then(() => {
@@ -192,9 +195,13 @@ exports.postEditCategory = (req, res, next) => {
     const name = req.body.name;
     const description = req.body.description;
 
-    const category = new Category(name, description, id);
-
-    category.save()
+    Category.updateOne({ _id: id },
+        {
+            $set: {
+                name: name,
+                description: description,
+            }
+        })
         .then(() => {
             res.redirect("/admin/categories?action=edit");
         })
@@ -205,7 +212,7 @@ exports.postEditCategory = (req, res, next) => {
 
 exports.postDeleteCategory = (req, res, next) => {
 
-    Category.deleteById(req.body.categoryId)
+    Category.findByIdAndDelete(req.body.categoryId)
         .then(() => {
             res.redirect("/admin/categories?action=delete");
         })
