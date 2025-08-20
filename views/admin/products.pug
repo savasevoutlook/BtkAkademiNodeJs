@@ -22,6 +22,7 @@ block content
                             th(style='width: 80px;').text-center Image
                             th Name
                             th(style='width: 15%;').text-center Price
+                            th Username
                             th(style="width: 15%;").text-center Actions
                     tbody
                         each product in products
@@ -30,6 +31,7 @@ block content
                                     img(src=`/img/${product.image}`, alt=`${product.name}`, style='width: 70px;')
                                 td #{product.name}
                                 td.text-center #{product.price} TL
+                                td #{product.userId.username}
                                 td.text-center
                                     a.btn.btn-primary.btn-sm(href=`/admin/edit-product/${product._id}`) Edit
 
