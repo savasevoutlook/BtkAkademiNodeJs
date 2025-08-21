@@ -20,21 +20,22 @@ block content
                                         th.text-center Price
                                         th.text-center Quantity 
                                 tbody
-                                    each product in order.items 
+                                    each item in order.items 
                                         tr 
                                             td.text-center.align-middle
-                                                img(src=`/img/${product.image}`, alt=`${product.name}`, style='width: 80px;')
-                                            td.align-middle #{product.name}
-                                            td.text-center.align-middle #{parseFloat(product.price).toFixed(2)} TL
-                                            td.text-center.align-middle #{product.quantity}
+                                                img(src=`/img/${item.product.image}`, alt=`${item.product.name}`, style='width: 80px;')
+                                            td.align-middle #{item.product.name}
+                                            td.text-center.align-middle #{parseFloat(item.product.price).toFixed(2)} TL
+                                            td.text-center.align-middle #{item.quantity}
 
                                 - var total = 0;
-                                each product in order.items
-                                    - total += (product.price * product.quantity)
+                                each item in order.items
+                                    - total += (item.product.price * item.quantity)
                                 tfoot
                                     tr 
                                         td
-                                        td(colspan="1").align-middle Sipariş Tarihi #{order.date}
+                                        td(colspan="1").align-middle Sipariş Tarihi: 
+                                            strong #{order.date.toLocaleString("tr-TR")}
                                         td.text-center.align-middle Toplam:
                                             br
                                             span #{total.toFixed(2)} TL
