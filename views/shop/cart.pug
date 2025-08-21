@@ -15,13 +15,13 @@ block content
                 each product in products 
                     tr 
                         td.text-center.align-middle
-                            img(src=`/img/${product.image}`, alt=`${product.name}`, style='width: 100px;')
-                        td.align-middle #{product.name}
-                        td.text-center.align-middle #{product.price} TL
+                            img(src=`/img/${product.productId.image}`, alt=`${product.productId.name}`, style='width: 100px;')
+                        td.align-middle #{product.productId.name}
+                        td.text-center.align-middle #{product.productId.price} TL
                         td.text-center.align-middle #{product.quantity}
                         td.text-center.align-middle
                             form(action='/delete-cartitem', method='post')
-                                input(type='hidden', name='productId', value=`${product._id}`)
+                                input(type='hidden', name='productId', value=`${product.productId._id}`)
                                 button(type='submit').btn.btn-outline-danger.btn-sm
                                     i.fa.fa-times
             tfoot
@@ -29,7 +29,7 @@ block content
                     td(colspan="4")
                         - var total = 0;
                         each product in products
-                            - total += (product.price * product.quantity)
+                            - total += (product.productId.price * product.quantity)
                     td.text-center #{total} TL
         .text-center 
             a(href="/").btn.btn-primary.inline-block Alışverişe Devam Et

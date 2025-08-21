@@ -69,7 +69,7 @@ exports.getProductsByCategory = (req, res, next) => {
     Category.find()
         .then(categories => {
             model.categories = categories;
-            
+
             return Product.find({
                 categories: categoryId
             });
@@ -89,12 +89,16 @@ exports.getProductsByCategory = (req, res, next) => {
 };
 
 exports.getCart = (req, res, next) => {
-    req.user.getCart()
-        .then(products => {
+    req.user
+        .populate('cart.items.productId')
+        .then(user => {
+
+            console.log(user);
+            
             res.render('shop/cart', {
                 title: 'Cart',
                 path: '/cart',
-                products: products
+                products: user.cart.items
             });
         })
         .catch(err => {
