@@ -91,10 +91,7 @@ exports.getProductsByCategory = (req, res, next) => {
 exports.getCart = (req, res, next) => {
     req.user
         .populate('cart.items.productId')
-        .then(user => {
-
-            console.log(user);
-            
+        .then(user => {            
             res.render('shop/cart', {
                 title: 'Cart',
                 path: '/cart',
