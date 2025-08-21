@@ -52,18 +52,21 @@ exports.postAddProduct = (req, res, next) => {
 
 exports.getEditProduct = (req, res, next) => {
     
-    Product.findOne({ _id: req.params.productId })
+    Product.findById(req.params.productId)
         .then(product => {
             if (!product) {
                 return res.redirect('/admin/products');
             }
 
+            return product;
+        })
+        .then(product => {
             Category.find()
                 .then(categories => {
                     categories = categories.map(category => {
                         if (product.categories) {
                             product.categories.find(item => {
-                                if (item == category._id) {
+                                if (item.toString() == category._id.toString()) {
                                     category.selected = true;
                                 }
                             });
@@ -93,6 +96,7 @@ exports.postEditProduct = (req, res, next) => {
     const price = req.body.price;
     const image = req.body.image;
     const description = req.body.description;
+    const ids = req.body.categoryIds;
 
     Product.updateOne({ _id: id },
         {
@@ -101,6 +105,7 @@ exports.postEditProduct = (req, res, next) => {
                 price: price,
                 image: image,
                 description: description,
+                categories: ids ? ids : [],
             }
         })
         .then(() => {
