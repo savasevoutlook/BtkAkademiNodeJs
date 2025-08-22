@@ -5,6 +5,7 @@ const path = require('path');
 
 const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
+const accountRoutes = require('./routes/account');
 const errorController = require('./controllers/errors');
 const User = require('./models/user');
 
@@ -27,6 +28,7 @@ const mongoose = require('mongoose');
 
 app.use('/admin', adminRoutes);
 app.use(shopRoutes);
+app.use(accountRoutes);
 app.use(errorController.get404Page);
 
 mongoose.connect('mongodb://localhost:27017/node-app')

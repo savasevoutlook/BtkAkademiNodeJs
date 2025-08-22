@@ -1,0 +1,29 @@
+extends ../layouts/main-layout.pug
+
+block styles
+    link(rel="stylesheet", href="/css/forms.css")
+
+block content
+    .row.mt-5
+        .col-6.offset-3
+            .card.card-default 
+                .card-header
+                    h6 Register
+                .card-body
+                    form(action="/account/register", method="POST")
+                        .form-group.row
+                            label(for="username").col-3.col-form-label Username
+                            .col-9
+                                input.form-control#username(type="text", name="username", required)
+                        .form-group.row
+                            label(for="email").col-3.col-form-label Email
+                            .col-9
+                                input.form-control#email(type="email", name="email", required)
+                        .form-group.row
+                            label(for="password").col-3.col-form-label Password
+                            .col-9
+                                input.form-control#password(type="password", name="password", required)
+                        .form-group.row
+                            .col-9.offset-3
+                                button.btn.btn-primary(type="submit") Register
+
