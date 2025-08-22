@@ -3,6 +3,7 @@ const app = express();
 const bodyParser = require('body-parser');
 const path = require('path');
 const cookieParser = require('cookie-parser');
+const session = require('express-session');
 
 const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
@@ -14,6 +15,15 @@ app.set('view engine', 'pug');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: false,
+    // cookie: {
+    //     maxAge: 3600000,
+    //     secure: true
+    // }
+}));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use((req, res, next) => {

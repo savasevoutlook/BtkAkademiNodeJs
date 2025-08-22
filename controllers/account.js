@@ -9,7 +9,22 @@ exports.postLogin = (req, res, next) => {
     const email = req.body.email;
     const password = req.body.password;
 
-    
+    console.log(password);
+
+    User.findOne({ email: email, password: password })
+        .then(user => {
+
+            console.log(user);
+
+            if (user) {
+                req.session.isAuthenticated = true;
+                res.redirect('/');
+            } else {
+                req.session.isAuthenticated = false;
+                res.redirect('/login');
+            }
+        })
+        .catch(err => { console.log(err); });
 }
 
 exports.getRegister = (req, res, next) => {
