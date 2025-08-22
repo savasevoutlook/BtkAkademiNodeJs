@@ -21,7 +21,7 @@ exports.postRegister = (req, res, next) => {
 }
 
 exports.getResetPassword = (req, res, next) => {
-    res.render('account/register', {
+    res.render('account/reset-password', {
         title: 'Reset Password',
         path: '/reset-password'
     });
