@@ -32,6 +32,7 @@ exports.postAddProduct = (req, res, next) => {
     const price = req.body.price;
     const image = req.body.image;
     const description = req.body.description;
+    const ids = req.body.categoryIds;
 
     const product = new Product({
         name: name,
@@ -39,6 +40,7 @@ exports.postAddProduct = (req, res, next) => {
         description: description,
         image: image,
         userId: req.user._id,
+        categories: ids ? ids : [],
     });
 
     product.save()
