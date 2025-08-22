@@ -1,3 +1,5 @@
+const User = require("../models/user");
+
 exports.getLogin = (req, res, next) => {
     res.render('account/login', {
         title: 'Login',
@@ -9,13 +11,8 @@ exports.postLogin = (req, res, next) => {
     const email = req.body.email;
     const password = req.body.password;
 
-    console.log(password);
-
     User.findOne({ email: email, password: password })
         .then(user => {
-
-            console.log(user);
-
             if (user) {
                 req.session.isAuthenticated = true;
                 res.redirect('/');

@@ -1,7 +1,5 @@
 const Product = require("../models/product");
 const Category = require("../models/category");
-const category = require("../models/category");
-
 
 exports.getProducts = (req, res, next) => {
     Product.find()
