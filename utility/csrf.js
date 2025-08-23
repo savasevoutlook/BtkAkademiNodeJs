@@ -13,7 +13,7 @@ const {
         path: "/",
         //secure: process.env.NODE_ENV !== "production",
         secure: true,
-        httpOnly: true,
+        httpOnly: false,
     },
     size: 32,
     ignoredMethods: ["GET", "HEAD", "OPTIONS"],

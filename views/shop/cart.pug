@@ -22,6 +22,7 @@ block content
                         td.text-center.align-middle
                             form(action='/delete-cartitem', method='post')
                                 input(type='hidden', name='productId', value=`${product.productId._id}`)
+                                input(type="hidden", name="_csrf", value=csrfToken)
                                 button(type='submit').btn.btn-outline-danger.btn-sm
                                     i.fa.fa-times
             tfoot
@@ -34,6 +35,7 @@ block content
         .text-center 
             a(href="/").btn.btn-primary.inline-block Alışverişe Devam Et
             form(action="/create-order", method="POST").inline-block
+                input(type="hidden", name="_csrf", value=csrfToken)
                 button(type="submit").btn.btn-primary.ml-2 Alışverişi Tamamla
     else
         .col-md-12

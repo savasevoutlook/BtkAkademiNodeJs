@@ -9,7 +9,7 @@ block content
             h6 Add Product
         .card-body
             form(action="/admin/add-product", method="POST")
-                input(type="hidden", name="_csrf", value=csrfToken, id="_csrf")
+                input(type="hidden", name="_csrf", value=csrfToken)
                 
                 .form-group.row
                     label(for="name").col-2.col-form-label Prodcut Name

@@ -32,7 +32,7 @@ block content
 
                                     form(action='/admin/delete-category', method='post')
                                         input(type='hidden', name='categoryId', value=`${category._id}`)
-                                        input(type="hidden", name="_csrf", value=csrfToken, id="_csrf")
+                                        input(type="hidden", name="_csrf", value=csrfToken)
                                         
                                         button(type='submit').btn.btn-danger.btn-sm Delete
         else

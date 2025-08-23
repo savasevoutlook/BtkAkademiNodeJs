@@ -139,6 +139,7 @@ exports.postCartItemDelete = (req, res, next) => {
 exports.getOrders = (req, res, next) => {
 
     Order.find({ 'user.userId': req.user._id })
+        .sort({ date: -1 })
         .then(orders => {
             res.render('shop/orders', {
                 title: 'Orders',
