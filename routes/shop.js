@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
+const isAuthenticated = require('../middleware/authentication');
+
 const shopController = require('../controllers/shop');
 
 router.get('/', shopController.getIndex);
@@ -17,8 +19,8 @@ router.post('/cart', shopController.postCart);
 
 router.post('/delete-cartitem', shopController.postCartItemDelete);
 
-router.get('/orders', shopController.getOrders);
+router.get('/orders', isAuthenticated, shopController.getOrders);
 
-router.post('/create-order', shopController.postOrder);
+router.post('/create-order', isAuthenticated, shopController.postOrder);
 
 module.exports = router;
