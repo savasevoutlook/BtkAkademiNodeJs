@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const { doubleCsrfProtection } = require('../middleware/csrf');
+const { doubleCsrfProtection } = require('../utility/csrf');
 const csrfTokenMiddleware = require('../middleware/csrfTokenMiddleware');
 const adminController = require('../controllers/admin');
 
@@ -14,7 +14,7 @@ router.get('/categories', csrfTokenMiddleware, adminController.getCategories);
 
 router.get('/add-category', csrfTokenMiddleware, adminController.getAddCategory);
 
-router.get('/edit-category/:categoryId', adminController.getEditCategory);
+router.get('/edit-category/:categoryId', csrfTokenMiddleware, adminController.getEditCategory);
 
 router.get('/edit-product/:productId', csrfTokenMiddleware, adminController.getEditProduct);
 
