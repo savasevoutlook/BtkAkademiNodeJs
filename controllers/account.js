@@ -1,4 +1,5 @@
 const User = require("../models/user");
+const bcrypt = require('bcrypt');
 
 exports.getLogin = (req, res, next) => {
     res.render('account/login', {
@@ -44,10 +45,13 @@ exports.postRegister = (req, res, next) => {
             return res.redirect('/register');
         }
 
+        return bcrypt.hash(password, 10);
+    })
+    .then(hashedPassword => {
         const newUser = new User({
             username: username,
             email: email,
-            password: password
+            password: hashedPassword
         });
 
         return newUser.save();
