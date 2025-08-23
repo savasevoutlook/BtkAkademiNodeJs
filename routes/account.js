@@ -1,10 +1,13 @@
 const express = require('express');
 const router = express.Router();
 
+const csrfTokenMiddleware = require('../middleware/csrfTokenMiddleware');
+const { doubleCsrfProtection } = require('../utility/csrf');
+
 const accountController = require('../controllers/account');
 
 
-router.get('/login', accountController.getLogin);
+router.get('/login', csrfTokenMiddleware, accountController.getLogin);
 
 router.get('/reset-password', accountController.getResetPassword);
 
@@ -13,11 +16,11 @@ router.get('/logout', accountController.getLogout);
 router.get('/register', accountController.getRegister);
 
 
-router.post('/login', accountController.postLogin);
+router.post('/login', doubleCsrfProtection, accountController.postLogin);
 
-router.post('/register', accountController.postRegister);
+router.post('/register', doubleCsrfProtection, accountController.postRegister);
 
-router.post('/reset-password', accountController.postResetPassword);
+router.post('/reset-password', doubleCsrfProtection, accountController.postResetPassword);
 
 
 module.exports = router;

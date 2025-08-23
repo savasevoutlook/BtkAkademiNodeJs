@@ -30,7 +30,7 @@ store.on('error', function(error) {
 app.use(session({
     secret: 'keyboard cat',
     resave: false,
-    saveUninitialized: false,
+    saveUninitialized: true,
     store: store
 }));
 

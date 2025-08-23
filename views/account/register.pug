@@ -11,6 +11,8 @@ block content
                     h6 Register
                 .card-body
                     form(action="/register", method="POST")
+                        input(type="hidden", name="_csrf", value=csrfToken)
+                        
                         .form-group.row
                             label(for="username").col-3.col-form-label Username
                             .col-9
