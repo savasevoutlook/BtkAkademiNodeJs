@@ -2,9 +2,13 @@ const User = require("../models/user");
 const bcrypt = require('bcrypt');
 
 exports.getLogin = (req, res, next) => {
+    var errorMessage = req.session.errorMessage;
+    delete req.session.errorMessage;
+
     res.render('account/login', {
         title: 'Login',
-        path: '/login'
+        path: '/login',
+        errorMessage: errorMessage,
     });
 }
 
@@ -16,7 +20,14 @@ exports.postLogin = (req, res, next) => {
     User.findOne({ email: email })
         .then(user => {
             if (!user) {
-                return res.redirect('/login');
+                req.session.errorMessage = 'Invalid email or password.';
+                req.session.save(err => {
+                    if (err) {
+                        console.log(err);
+                    }
+
+                    return res.redirect('/login');
+                });
             }
 
             foundUser = user;
@@ -43,9 +54,18 @@ exports.postLogin = (req, res, next) => {
                 });
             }
 
-            return res.redirect('/login');
+            req.session.errorMessage = 'Invalid email or password.';
+            req.session.save(err => {
+                if (err) {
+                    console.log(err);
+                }
+
+                return res.redirect('/login');
+            });
         })
-        .catch(err => { console.log(err); });
+        .catch(err => {
+            console.log(err);
+        });
 }
 
 exports.getLogout = (req, res, next) => {
@@ -58,9 +78,13 @@ exports.getLogout = (req, res, next) => {
 }
 
 exports.getRegister = (req, res, next) => {
+    var errorMessage = req.session.errorMessage;
+    delete req.session.errorMessage;
+
     res.render('account/register', {
         title: 'Register',
-        path: '/register'
+        path: '/register',
+        errorMessage: errorMessage,
     });
 }
 
@@ -74,7 +98,14 @@ exports.postRegister = (req, res, next) => {
     })
     .then(user => {
         if (user) {
-            return res.redirect('/register');
+            req.session.errorMessage = 'Username or email already exists.';
+            req.session.save(err => {
+                if (err) {
+                    console.log(err);
+                }
+
+                return res.redirect('/register');
+            });
         }
 
         return bcrypt.hash(password, 10);
