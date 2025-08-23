@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const path = require('path');
+const cookieParser = require('cookie-parser');
 
 const session = require('express-session');
 var MongoDBStore = require('connect-mongodb-session')(session);
@@ -12,18 +13,19 @@ const accountRoutes = require('./routes/account');
 const errorController = require('./controllers/errors');
 const User = require('./models/user');
 const ConnectionString = 'mongodb://localhost:27017/node-app';
+const { generateCsrfToken } = require('./utility/csrf');
 const isAuthenticated = require('./middleware/authentication');
 
 app.set('view engine', 'pug');
 app.use(bodyParser.urlencoded({ extended: false }));
 
 var store = new MongoDBStore({
-  uri: ConnectionString,
-  collection: 'mySessions'
+    uri: ConnectionString,
+    collection: 'mySessions'
 });
 
 store.on('error', function(error) {
-  console.log(error);
+    console.log(error);
 });
 
 app.use(session({
@@ -32,6 +34,14 @@ app.use(session({
     saveUninitialized: false,
     store: store
 }));
+
+// Cookie parser
+app.use(cookieParser('keyboard cat'));
+
+app.use((req, res, next) => {
+    res.locals.csrfToken = generateCsrfToken(req, res);
+    next();
+});
 
 app.use(express.static(path.join(__dirname, 'public')));
 
