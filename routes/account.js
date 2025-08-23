@@ -7,6 +7,8 @@ router.get('/login', accountController.getLogin);
 
 router.post('/login', accountController.postLogin);
 
+router.get('/logout', accountController.getLogout);
+
 router.get('/register', accountController.getRegister);
 
 router.post('/register', accountController.postRegister);

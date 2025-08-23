@@ -23,6 +23,8 @@ nav.navbar.navbar-expand-lg.navbar-dark.bg-dark.fixed-top
                 if isAuthenticated
                     li.nav-item
                         a.nav-link(href="/orders", class=(path === '/orders' ? 'nav-link active' : 'nav-link')) Orders
+                    li.nav-item
+                        a.nav-link(href="/logout") Logout
                 else
                     li.nav-item
                         a.nav-link(href="/login", class=(path === '/login' ? 'nav-link active' : 'nav-link')) Login 

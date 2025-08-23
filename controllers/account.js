@@ -48,6 +48,15 @@ exports.postLogin = (req, res, next) => {
         .catch(err => { console.log(err); });
 }
 
+exports.getLogout = (req, res, next) => {
+    req.session.destroy(err => {
+        if (err) {
+            console.log(err);
+        }
+        res.redirect('/');
+    });
+}
+
 exports.getRegister = (req, res, next) => {
     res.render('account/register', {
         title: 'Register',
