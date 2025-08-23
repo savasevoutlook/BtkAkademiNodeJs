@@ -12,7 +12,6 @@ exports.getProducts = (req, res, next) => {
                 products: products,
                 path: "/admin/products",
                 action: req.query.action,
-                isAuthenticated: req.session.isAuthenticated
             });
         }).catch(err => {
             console.log(err);
@@ -26,7 +25,6 @@ exports.getAddProduct = (req, res, next) => {
                 title: "New Product",
                 path: "/admin/add-product",
                 categories: categories,
-                isAuthenticated: req.session.isAuthenticated
             });
         })
         .catch(err => {
@@ -88,7 +86,6 @@ exports.getEditProduct = (req, res, next) => {
                         product: product,
                         categories: categories,
                         path: "/admin/edit-product",
-                        isAuthenticated: req.session.isAuthenticated
                     });
                 })
                 .catch(err => {
@@ -146,7 +143,6 @@ exports.getCategories = (req, res, next) => {
                 categories: categories,
                 path: "/admin/categories",
                 action: req.query.action,
-                isAuthenticated: req.session.isAuthenticated
             });
         }).catch(err => {
             console.log(err);
@@ -157,7 +153,6 @@ exports.getAddCategory = (req, res, next) => {
     res.render("admin/add-category", {
         title: "New Category",
         path: "/admin/add-category",
-        isAuthenticated: req.session.isAuthenticated
     });
 };
 
@@ -192,7 +187,6 @@ exports.getEditCategory = (req, res, next) => {
                 title: "Edit Category",
                 category: category,
                 path: "/admin/edit-category",
-                isAuthenticated: req.session.isAuthenticated
             });
         }).catch(err => {
             console.log(err);
