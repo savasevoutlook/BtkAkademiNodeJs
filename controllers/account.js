@@ -33,14 +33,17 @@ exports.postLogin = (req, res, next) => {
                 req.session.isAuthenticated = true;
 
                 return req.session.save(err => {
-                    console.log(err);
+                    if (err) {
+                        console.log(err);
+                    }
+
+                    var url = req.session.redirectTo || '/';
+                    delete req.session.redirectTo;
+                    return res.redirect(url);
                 });
             }
 
-            res.redirect('/login');
-        })
-        .then(() => {
-            res.redirect('/');
+            return res.redirect('/login');
         })
         .catch(err => { console.log(err); });
 }
