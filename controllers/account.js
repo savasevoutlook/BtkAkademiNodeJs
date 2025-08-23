@@ -32,7 +32,32 @@ exports.getRegister = (req, res, next) => {
 }
 
 exports.postRegister = (req, res, next) => {
-    
+    const username = req.body.username;
+    const email = req.body.email;
+    const password = req.body.password;
+
+    User.findOne({
+        $or: [{ email: email }, { username: username }]
+    })
+    .then(user => {
+        if (user) {
+            return res.redirect('/register');
+        }
+
+        const newUser = new User({
+            username: username,
+            email: email,
+            password: password
+        });
+
+        return newUser.save();
+    })
+    .then(() => {
+        res.redirect('/login');
+    })
+    .catch(err => {
+        console.log(err);
+    });
 }
 
 exports.getResetPassword = (req, res, next) => {
