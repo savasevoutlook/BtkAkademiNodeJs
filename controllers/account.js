@@ -11,16 +11,36 @@ exports.getLogin = (req, res, next) => {
 exports.postLogin = (req, res, next) => {
     const email = req.body.email;
     const password = req.body.password;
+    let foundUser;
 
-    User.findOne({ email: email, password: password })
+    User.findOne({ email: email })
         .then(user => {
-            if (user) {
-                req.session.isAuthenticated = true;
-                res.redirect('/');
-            } else {
-                req.session.isAuthenticated = false;
-                res.redirect('/login');
+            if (!user) {
+                return res.redirect('/login');
             }
+
+            foundUser = user;
+            return bcrypt.compare(password, user.password);
+        })
+        .then(isMatch => {
+
+            if (isMatch === undefined) {
+                return;
+            }
+
+            if (isMatch) {
+                req.session.user = foundUser;
+                req.session.isAuthenticated = true;
+
+                return req.session.save(err => {
+                    console.log(err);
+                });
+            }
+
+            res.redirect('/login');
+        })
+        .then(() => {
+            res.redirect('/');
         })
         .catch(err => { console.log(err); });
 }

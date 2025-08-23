@@ -36,7 +36,11 @@ app.use(session({
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use((req, res, next) => {
-    User.findOne({ email: 'savas.ev@example.com' })
+    if (!req.session.user) {
+        return next();
+    }
+
+    User.findById(req.session.user._id)
         .then(user => {
             if (user) {
                 req.user = user;
