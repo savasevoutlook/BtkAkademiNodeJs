@@ -23,7 +23,10 @@ block content
                                     each item in order.items 
                                         tr 
                                             td.text-center.align-middle
-                                                img(src=`/img/${item.product.image}`, alt=`${item.product.name}`, style='width: 80px;')
+                                                if item.product.imageUrls && item.product.imageUrls.length > 0
+                                                    img(src=`/${item.product.imageUrls[0]}`, alt=`${item.product.name}`, style='width: 80px;')
+                                                else 
+                                                    img(src="/img/no-image.png", alt="No Image", style='width: 80px;')
                                             td.align-middle #{item.product.name}
                                             td.text-center.align-middle #{parseFloat(item.product.price).toFixed(2)} TL
                                             td.text-center.align-middle #{item.quantity}
