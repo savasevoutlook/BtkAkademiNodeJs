@@ -36,11 +36,10 @@ exports.getAddProduct = (req, res, next) => {
 exports.postAddProduct = (req, res, next) => {
     const name = req.body.name;
     const price = req.body.price;
-    const image = req.body.image;
     const description = req.body.description;
     const ids = req.body.categoryIds;
-
-    const imageUrls = req.files ? req.files.map(file => file.path) : [];
+    
+    const imageUrls = req.files ? req.files.map(file => file.path.replace(/\\/g, "/")) : [];
 
     console.log(imageUrls);
 
@@ -48,7 +47,7 @@ exports.postAddProduct = (req, res, next) => {
         name: name,
         price: price,
         description: description,
-        image: image,
+        imageUrls: imageUrls,
         userId: req.user._id,
         categories: ids ? ids : [],
     });
@@ -110,6 +109,8 @@ exports.postEditProduct = (req, res, next) => {
     const description = req.body.description;
     const ids = req.body.categoryIds;
 
+    const imageUrls = req.files ? req.files.map(file => file.path.replace(/\\/g, "/")) : [];
+
     Product.updateOne({ _id: id, userId: req.user._id },
         {
             $set: {
@@ -118,6 +119,7 @@ exports.postEditProduct = (req, res, next) => {
                 image: image,
                 description: description,
                 categories: ids ? ids : [],
+                imageUrls: imageUrls,
             }
         })
         .then(() => {

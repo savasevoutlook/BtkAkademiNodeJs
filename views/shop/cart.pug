@@ -15,7 +15,7 @@ block content
                 each product in products 
                     tr 
                         td.text-center.align-middle
-                            img(src=`/img/${product.productId.image}`, alt=`${product.productId.name}`, style='width: 100px;')
+                            img(src=`/${product.productId.imageUrls[0]}`, alt=`${product.productId.name}`, style='width: 100px;')
                         td.align-middle #{product.productId.name}
                         td.text-center.align-middle #{product.productId.price} TL
                         td.text-center.align-middle #{product.quantity}

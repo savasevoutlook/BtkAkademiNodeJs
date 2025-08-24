@@ -40,6 +40,7 @@ app.use(session({
 app.use(cookieParser(process.env.SESSION_SECRET));
 
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.use((req, res, next) => {
     if (!req.session.user) {

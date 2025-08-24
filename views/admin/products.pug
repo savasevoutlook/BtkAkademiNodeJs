@@ -28,7 +28,7 @@ block content
                         each product in products
                             tr
                                 td.text-center
-                                    img(src=`/img/${product.image}`, alt=`${product.name}`, style='width: 70px;')
+                                    img(src=`/${product.imageUrls[0]}`, alt=`${product.name}`, style='width: 70px;')
                                 td #{product.name}
                                 td.text-center #{product.price} TL
                                 td #{product.userId.username}
