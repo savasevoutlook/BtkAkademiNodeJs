@@ -3,7 +3,7 @@ mixin createProduct(product)
         .card.mb-3
             a(href=`/products/${product._id}`)
                 if product.imageUrls && product.imageUrls.length > 0
-                    img.card-img-top(src=`/${product.imageUrls[0]}`, alt=product.name)
+                    img.card-img-top(src=product.imageUrls[0], alt=product.name)
                 else
                     img.card-img-top(src="/img/no-image.png", alt="No Image")
 

@@ -29,7 +29,7 @@ block content
                             tr
                                 td.text-center
                                     if product.imageUrls && product.imageUrls.length > 0
-                                        img(src=`/${product.imageUrls[0]}`, alt=`${product.name}`, style='width: 70px;')
+                                        img(src=product.imageUrls[0], alt=`${product.name}`, style='width: 70px;')
                                     else
                                         img(src="/img/no-image.png", alt="No Image", style='width: 70px;')
 

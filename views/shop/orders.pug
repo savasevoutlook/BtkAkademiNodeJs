@@ -24,7 +24,7 @@ block content
                                         tr 
                                             td.text-center.align-middle
                                                 if item.product.imageUrl
-                                                    img(src=`/${item.product.imageUrl}`, alt=`${item.product.name}`, style='width: 80px;')
+                                                    img(src=item.product.imageUrl, alt=`${item.product.name}`, style='width: 80px;')
                                                 else 
                                                     img(src="/img/no-image.png", alt="No Image", style='width: 80px;')
                                             td.align-middle #{item.product.name}

@@ -39,7 +39,7 @@ exports.postAddProduct = (req, res, next) => {
     const description = req.body.description;
     const ids = req.body.categoryIds;
     
-    const imageUrls = req.files ? req.files.map(file => file.path.replace(/\\/g, "/")) : [];
+    const imageUrls = req.files ? req.files.map(file => '/' + file.path.replace(/\\/g, "/")) : [];
 
     console.log(imageUrls);
 

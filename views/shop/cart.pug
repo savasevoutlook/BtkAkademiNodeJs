@@ -16,7 +16,7 @@ block content
                     tr 
                         td.text-center.align-middle
                             if product.productId.imageUrls && product.productId.imageUrls.length > 0
-                                img(src=`/${product.productId.imageUrls[0]}`, alt=`${product.productId.name}`, style='width: 100px;')
+                                img(src=product.productId.imageUrls[0], alt=`${product.productId.name}`, style='width: 100px;')
                             else
                                 img(src="/img/no-image.png", alt="No Image", style='width: 100px;')
                         td.align-middle #{product.productId.name}
