@@ -1,6 +1,7 @@
 const Product = require('../models/product');
 const Category = require('../models/category');
 const Order = require('../models/order');
+const { JSON } = require('sequelize');
 
 exports.getIndex = (req, res, next) => {
     Product.find()
@@ -163,7 +164,7 @@ exports.postOrder = (req, res, next) => {
                             _id: item.productId._id,
                             name: item.productId.name,
                             price: item.productId.price,
-                            imageUrl: item.productId.imageUrl,
+                            imageUrl: item.productId.imageUrls?.[0] || null,
                         },
                         quantity: item.quantity
                     };
