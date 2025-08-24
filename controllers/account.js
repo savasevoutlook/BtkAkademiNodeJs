@@ -215,3 +215,11 @@ exports.postResetPassword = (req, res, next) => {
             });
     });
 }
+
+exports.getNewPassword = (req, res, next) => {
+    
+}
+
+exports.postNewPassword = (req, res, next) => {
+
+}
