@@ -5,7 +5,7 @@ const Category = require("../models/category");
 exports.getProducts = (req, res, next) => {
     Product.find({ userId: req.user._id })
         .populate("userId", 'username')
-        .select('name price userId image')
+        .select('name price userId imageUrls')
         .sort({ name: 1})
         .then(products => {
             res.render("admin/products", {
