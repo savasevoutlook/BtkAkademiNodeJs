@@ -1,6 +1,7 @@
 const User = require("../models/user");
 const bcrypt = require('bcrypt');
 const sgMail = require('@sendgrid/mail');
+const crypto = require('crypto');
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
@@ -125,7 +126,7 @@ exports.postRegister = (req, res, next) => {
     .then((user) => {
         const msg = {
             to: user.email,
-            from: 'savas.ev@outlook.com',
+            from: process.env.SENDGRID_FROM_EMAIL,
             subject: 'Hesabınız Oluşturuldu',
             html: '<h4>Hesabınız başarıyla oluşturuldu.</h4>',
         };
@@ -158,5 +159,59 @@ exports.getResetPassword = (req, res, next) => {
 }
 
 exports.postResetPassword = (req, res, next) => {
-    
+    const email = req.body.email;
+
+    crypto.randomBytes(32, (err, buffer) => {
+        if (err) {
+            console.log(err);
+            return res.redirect('/reset-password');
+        }
+
+        const token = buffer.toString('hex');
+        
+        User.findOne({ email: email })
+            .then(user => {
+                if (!user) {
+                    req.session.errorMessage = 'No account with that email found.';
+                    req.session.save(err => {
+                        if (err) {
+                            console.log(err);
+                        }
+
+                        return res.redirect('/reset-password');
+                    });
+                }
+
+                user.resetToken = token;
+                user.resetTokenExpiration = Date.now() + 3600000; // 1 hour
+                return user.save();
+            })
+            .then(user => {
+                res.redirect('/');
+
+                const msg = {
+                    to: user.email,
+                    from: process.env.SENDGRID_FROM_EMAIL,
+                    subject: 'Parola Sıfırlama',
+                    html: `
+                        <h4>Parolanızı değiştirmek için aşağıdaki linke tıklayınız.</h4>
+                        <p>
+                            <a href="http://localhost:3000/reset/${user.resetToken}">Parola Sıfırlama Linki</a>
+                        </p>
+                    `,
+                };
+
+                sgMail.send(msg)
+                    .then(() => {}, error => {
+                        console.error(error);
+
+                        if (error.response) {
+                            console.error(error.response.body)
+                        }
+                    });
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    });
 }
