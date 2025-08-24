@@ -122,7 +122,23 @@ exports.postRegister = (req, res, next) => {
 
         return newUser.save();
     })
-    .then(() => {
+    .then((user) => {
+        const msg = {
+            to: user.email,
+            from: 'savas.ev@outlook.com',
+            subject: 'Hesabınız Oluşturuldu',
+            html: '<h4>Hesabınız başarıyla oluşturuldu.</h4>',
+        };
+
+        sgMail.send(msg)
+            .then(() => {}, error => {
+                console.error(error);
+
+                if (error.response) {
+                    console.error(error.response.body)
+                }
+            });
+
         res.redirect('/login');
     })
     .catch(err => {
