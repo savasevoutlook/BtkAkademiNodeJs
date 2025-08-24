@@ -13,7 +13,7 @@ router.get('/products', csrfTokenMiddleware, shopController.getProducts);
 
 router.get('/products/:productId', csrfTokenMiddleware, shopController.getProduct);
 
-router.get('/categories/:categoryId', shopController.getProductsByCategory);
+router.get('/categories/:categoryId', csrfTokenMiddleware, shopController.getProductsByCategory);
 
 router.get('/cart', csrfTokenMiddleware, isAuthenticated, shopController.getCart);
 

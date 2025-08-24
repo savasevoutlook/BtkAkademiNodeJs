@@ -81,7 +81,7 @@ exports.getProductsByCategory = (req, res, next) => {
                 products: products,
                 categories: model.categories,
                 selectedCategoryId: categoryId,
-                path: '/products',
+                path: '/categories/' + categoryId,
             });
         })
         .catch(err => {
