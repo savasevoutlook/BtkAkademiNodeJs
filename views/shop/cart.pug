@@ -15,7 +15,10 @@ block content
                 each product in products 
                     tr 
                         td.text-center.align-middle
-                            img(src=`/${product.productId.imageUrls[0]}`, alt=`${product.productId.name}`, style='width: 100px;')
+                            if product.productId.imageUrls && product.productId.imageUrls.length > 0
+                                img(src=`/${product.productId.imageUrls[0]}`, alt=`${product.productId.name}`, style='width: 100px;')
+                            else
+                                img(src="/img/no-image.png", alt="No Image", style='width: 100px;')
                         td.align-middle #{product.productId.name}
                         td.text-center.align-middle #{product.productId.price} TL
                         td.text-center.align-middle #{product.quantity}
