@@ -12,10 +12,13 @@ var MongoDBStore = require('connect-mongodb-session')(session);
 const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
 const accountRoutes = require('./routes/account');
+const errorRoutes = require('./routes/error');
 const errorController = require('./controllers/errors');
+
 const User = require('./models/user');
 const ConnectionString = 'mongodb://localhost:27017/node-app';
 const isAuthenticated = require('./middleware/authentication');
+const isAdmin = require('./middleware/is-admin');
 
 app.set('view engine', 'pug');
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -59,9 +62,10 @@ app.use((req, res, next) => {
 
 const mongoose = require('mongoose');
 
-app.use('/admin', isAuthenticated, adminRoutes);
+app.use('/admin', isAuthenticated, isAdmin, adminRoutes);
 app.use(shopRoutes);
 app.use(accountRoutes);
+app.use(errorRoutes);
 app.use(errorController.get404Page);
 
 mongoose.connect(ConnectionString)
