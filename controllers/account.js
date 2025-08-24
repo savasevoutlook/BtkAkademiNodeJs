@@ -147,9 +147,13 @@ exports.postRegister = (req, res, next) => {
 }
 
 exports.getResetPassword = (req, res, next) => {
+    var errorMessage = req.session.errorMessage;
+    delete req.session.errorMessage;
+
     res.render('account/reset-password', {
         title: 'Reset Password',
-        path: '/reset-password'
+        path: '/reset-password',
+        errorMessage: errorMessage,
     });
 }
 
