@@ -1,5 +1,8 @@
 const User = require("../models/user");
 const bcrypt = require('bcrypt');
+const sgMail = require('@sendgrid/mail');
+
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 exports.getLogin = (req, res, next) => {
     var errorMessage = req.session.errorMessage;
