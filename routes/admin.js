@@ -22,7 +22,7 @@ router.get('/edit-product/:productId', csrfTokenMiddleware, adminController.getE
 
 router.post('/add-product', upload.array('image', 10), doubleCsrfProtection, adminController.postAddProduct);
 
-router.post('/edit-product', doubleCsrfProtection, adminController.postEditProduct);
+router.post('/edit-product', upload.array('image', 10), doubleCsrfProtection, adminController.postEditProduct);
 
 router.post('/delete-product', doubleCsrfProtection, adminController.postDeleteProduct);
 
