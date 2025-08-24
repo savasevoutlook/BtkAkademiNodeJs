@@ -163,7 +163,7 @@ exports.postOrder = (req, res, next) => {
                             _id: item.productId._id,
                             name: item.productId.name,
                             price: item.productId.price,
-                            image: item.productId.image,
+                            imageUrl: item.productId.imageUrl,
                         },
                         quantity: item.quantity
                     };
