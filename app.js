@@ -30,14 +30,14 @@ store.on('error', function(error) {
 });
 
 app.use(session({
-    secret: 'keyboard cat',
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
     store: store
 }));
 
 // Cookie parser
-app.use(cookieParser('keyboard cat'));
+app.use(cookieParser(process.env.SESSION_SECRET));
 
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -66,8 +66,9 @@ app.use(errorController.get404Page);
 mongoose.connect(ConnectionString)
     .then(() => {
         console.log('connected to MongoDB');
-        app.listen(3000);
+        app.listen(process.env.PORT);
     })
     .catch(err => {
         console.log(err);
     });
+    

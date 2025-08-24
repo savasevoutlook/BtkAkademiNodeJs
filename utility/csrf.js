@@ -5,7 +5,7 @@ const {
     generateCsrfToken,
     invalidCsrfTokenError
 } = doubleCsrf({
-    getSecret: () => "a_very_secret_random_string",
+    getSecret: () => process.env.CSRF_SECRET,
     getSessionIdentifier: (req) => req.session.id,
     cookieName: "__Host-psifi.x-csrf-token",
     cookieOptions: {
