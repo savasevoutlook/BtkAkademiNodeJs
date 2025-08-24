@@ -238,7 +238,7 @@ exports.getNewPassword = (req, res, next) => {
             res.render('account/new-password', {
                 title: 'New Password',
                 errorMessage: errorMessage,
-                userId: user._id.toString(),
+                userId: user._id,
                 passwordToken: token,
             });
         })
