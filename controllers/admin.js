@@ -2,7 +2,7 @@ const Product = require("../models/product");
 const Category = require("../models/category");
 
 exports.getProducts = (req, res, next) => {
-    Product.find()
+    Product.find({ userId: req.user._id })
         .populate("userId", 'username')
         .select('name price userId image')
         .sort({ name: 1})
@@ -59,7 +59,7 @@ exports.postAddProduct = (req, res, next) => {
 
 exports.getEditProduct = (req, res, next) => {
     
-    Product.findById(req.params.productId)
+    Product.findOne({ _id: req.params.productId, userId: req.user._id })
         .then(product => {
             if (!product) {
                 return res.redirect('/admin/products');
@@ -105,7 +105,7 @@ exports.postEditProduct = (req, res, next) => {
     const description = req.body.description;
     const ids = req.body.categoryIds;
 
-    Product.updateOne({ _id: id },
+    Product.updateOne({ _id: id, userId: req.user._id },
         {
             $set: {
                 name: name,
@@ -124,8 +124,9 @@ exports.postEditProduct = (req, res, next) => {
 };
 
 exports.postDeleteProduct = (req, res, next) => {
+    const id = req.body.productId;
 
-    Product.findByIdAndDelete(req.body.productId)
+    Product.deleteOne({ _id: id, userId: req.user._id })
         .then(() => {
             res.redirect("/admin/products?action=delete");
         })
