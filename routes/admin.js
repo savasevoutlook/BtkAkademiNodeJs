@@ -2,7 +2,8 @@ const express = require('express');
 const router = express.Router();
 
 const { doubleCsrfProtection } = require('../utility/csrf');
-const csrfTokenMiddleware = require('../middleware/csrfTokenMiddleware');
+const csrfTokenMiddleware = require('../middleware/csrf-token-middleware');
+const upload = require('../middleware/file-upload');
 const adminController = require('../controllers/admin');
 
 
@@ -19,7 +20,7 @@ router.get('/edit-category/:categoryId', csrfTokenMiddleware, adminController.ge
 router.get('/edit-product/:productId', csrfTokenMiddleware, adminController.getEditProduct);
 
 
-router.post('/add-product', doubleCsrfProtection, adminController.postAddProduct);
+router.post('/add-product', upload.array('image', 10), doubleCsrfProtection, adminController.postAddProduct);
 
 router.post('/edit-product', doubleCsrfProtection, adminController.postEditProduct);
 

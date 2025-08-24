@@ -1,6 +1,7 @@
 const Product = require("../models/product");
 const Category = require("../models/category");
 
+
 exports.getProducts = (req, res, next) => {
     Product.find({ userId: req.user._id })
         .populate("userId", 'username')
@@ -38,6 +39,10 @@ exports.postAddProduct = (req, res, next) => {
     const image = req.body.image;
     const description = req.body.description;
     const ids = req.body.categoryIds;
+
+    const imageUrls = req.files ? req.files.map(file => file.path) : [];
+
+    console.log(imageUrls);
 
     const product = new Product({
         name: name,

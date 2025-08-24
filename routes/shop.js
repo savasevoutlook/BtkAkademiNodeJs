@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const isAuthenticated = require('../middleware/authentication');
-const csrfTokenMiddleware = require('../middleware/csrfTokenMiddleware');
+const csrfTokenMiddleware = require('../middleware/csrf-token-middleware');
 const { doubleCsrfProtection } = require('../utility/csrf');
 
 const shopController = require('../controllers/shop');

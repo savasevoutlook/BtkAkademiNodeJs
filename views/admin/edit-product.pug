@@ -8,7 +8,7 @@ block content
         .card-header
             h6 Edit Product
         .card-body
-            form(action="/admin/edit-product", method="POST")
+            form(action="/admin/edit-product", method="POST", enctype="multipart/form-data")
                 input(type="hidden", name="id", value=`${product._id}`)#id
                 input(type="hidden", name="_csrf", value=csrfToken)
 
@@ -23,7 +23,7 @@ block content
                 .form-group.row
                     label(for="image").col-2.col-form-label Image
                     .col-10
-                        input.form-control#image(type="text", name="image", value=`${product.image}`, required)
+                        input.form-control-file#image(type="file", name="image", accept="image/*", multiple, required)
                 .form-group.row
                     label(for="description").col-2.col-form-label Description
                     .col-10
