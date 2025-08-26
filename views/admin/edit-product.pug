@@ -15,19 +15,19 @@ block content
                 .form-group.row
                     label(for="name").col-2.col-form-label Prodcut Name
                     .col-10
-                        input.form-control#name(type="text", name="name", value=`${product.name}`, required)
+                        input.form-control#name(type="text", name="name", value=`${product.name}`)
                 .form-group.row
                     label(for="price").col-2.col-form-label Price
                     .col-10
-                        input.form-control#price(type="text", name="price", value=`${product.price}`, required)
+                        input.form-control#price(type="text", name="price", value=`${product.price}`)
                 .form-group.row
                     label(for="image").col-2.col-form-label Image
                     .col-10
-                        input.form-control-file#image(type="file", name="image", accept="image/*", multiple, required)
+                        input.form-control-file#image(type="file", name="image", accept="image/*", multiple)
                 .form-group.row
                     label(for="description").col-2.col-form-label Description
                     .col-10
-                        textarea.form-control#description(name="description", required) #{product.description}
+                        textarea.form-control#description(name="description") #{product.description}
                 .form-group.row
                     label(for="categoryIds").col-2.col-form-label Category
                     .col-10

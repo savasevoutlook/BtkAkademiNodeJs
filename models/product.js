@@ -39,6 +39,15 @@ const productSchema = new mongoose.Schema({
             required: true
         }
     ],
+    tags: {
+        type: Array,
+        validate: {
+            validator: function(value) {
+                return value && value.length > 0;
+            },
+            message: 'Ürün için en az bir etiket giriniz'
+        }
+    },
     isActive: {
         type: Boolean
     }
