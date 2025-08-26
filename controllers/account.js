@@ -143,7 +143,7 @@ exports.postRegister = (req, res, next) => {
         res.redirect('/login');
     })
     .catch(err => {
-        console.log(err);
+        console.log(err.message);
     });
 }
 
