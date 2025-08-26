@@ -4,14 +4,19 @@ const productSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
+        minlength: 5,
+        maxlength: 255
     },
     price: {
         type: Number,
         required: true,
         min: 0,
+        required: function() {
+            return this.isActive;
+        }
     },
     description: {
-        type: String,
+        type: String,        
     },
     imageUrls: [
         {
@@ -33,7 +38,10 @@ const productSchema = new mongoose.Schema({
             ref: 'Category',
             required: true
         }
-    ]
+    ],
+    isActive: {
+        type: Boolean
+    }
 });
 
 module.exports = mongoose.model('Product', productSchema); //products

@@ -38,6 +38,7 @@ exports.postAddProduct = (req, res, next) => {
     const price = req.body.price;
     const description = req.body.description;
     const ids = req.body.categoryIds;
+    const isActive = req.body.isActive;
     
     const imageUrls = req.files ? req.files.map(file => '/' + file.path.replace(/\\/g, "/")) : [];
 
@@ -45,11 +46,12 @@ exports.postAddProduct = (req, res, next) => {
 
     const product = new Product({
         name: name,
-        price: price,
+        // price: price,
         description: description,
         imageUrls: imageUrls,
         userId: req.user._id,
         categories: ids ? ids : [],
+        isActive: isActive
     });
 
     product.save()
@@ -108,6 +110,7 @@ exports.postEditProduct = (req, res, next) => {
     const image = req.body.image;
     const description = req.body.description;
     const ids = req.body.categoryIds;
+    const isActive = req.body.isActive;
 
     const imageUrls = req.files ? req.files.map(file => file.path.replace(/\\/g, "/")) : [];
 
@@ -120,6 +123,7 @@ exports.postEditProduct = (req, res, next) => {
                 description: description,
                 categories: ids ? ids : [],
                 imageUrls: imageUrls,
+                isActive: isActive,
             }
         })
         .then(() => {
