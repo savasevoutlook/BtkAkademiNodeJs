@@ -40,7 +40,7 @@ exports.postAddProduct = (req, res, next) => {
     const ids = req.body.categoryIds;
     const isActive = req.body.isActive === "on" ? true : false;
     
-    const imagePath = req.file ? req.file.path.replace(/\\/g, "/") : null;
+    const imagePath = req.file ? '/' + req.file.path.replace(/\\/g, "/") : null;
 
     const product = new Product({
         name: name,
@@ -130,7 +130,7 @@ exports.postEditProduct = (req, res, next) => {
     const ids = req.body.categoryIds;
     const isActive = req.body.isActive === "on" ? true : false;
 
-    const imagePath = req.file ? req.file.path.replace(/\\/g, "/") : null;
+    const imagePath = req.file ? '/' + req.file.path.replace(/\\/g, "/") : null;
 
     Product.updateOne({ _id: id, userId: req.user._id },
         {
