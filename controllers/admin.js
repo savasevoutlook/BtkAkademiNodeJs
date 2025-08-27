@@ -150,7 +150,24 @@ exports.postEditProduct = (req, res, next) => {
 exports.postDeleteProduct = (req, res, next) => {
     const id = req.body.productId;
 
-    Product.deleteOne({ _id: id, userId: req.user._id })
+    Product.findOne({ _id: id, userId: req.user._id })
+        .then(product => {
+            if (!product) {
+                return res.redirect('/admin/products');
+            }
+
+            if (product.imageUrl) {
+                const fullImagePath = path.join(__dirname, '..', product.imageUrl); 
+
+                fs.unlink(fullImagePath, (err) => {
+                    if (err) {
+                        console.log(err);
+                    }
+                });
+            }
+
+            return Product.deleteOne({ _id: id, userId: req.user._id });
+        })
         .then(() => {
             res.redirect("/admin/products?action=delete");
         })
