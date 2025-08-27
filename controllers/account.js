@@ -27,7 +27,7 @@ exports.postLogin = (req, res, next) => {
                 req.session.errorMessage = 'Invalid email or password.';
                 req.session.save(err => {
                     if (err) {
-                        console.log(err);
+                        next(err);
                     }
 
                     return res.redirect('/login');
@@ -49,7 +49,7 @@ exports.postLogin = (req, res, next) => {
 
                 return req.session.save(err => {
                     if (err) {
-                        console.log(err);
+                        next(err);
                     }
 
                     var url = req.session.redirectTo || '/';
@@ -61,21 +61,21 @@ exports.postLogin = (req, res, next) => {
             req.session.errorMessage = 'Invalid email or password.';
             req.session.save(err => {
                 if (err) {
-                    console.log(err);
+                    next(err);
                 }
 
                 return res.redirect('/login');
             });
         })
         .catch(err => {
-            console.log(err);
+            next(err);
         });
 }
 
 exports.getLogout = (req, res, next) => {
     req.session.destroy(err => {
         if (err) {
-            console.log(err);
+            next(err);
         }
         res.redirect('/');
     });
@@ -105,7 +105,7 @@ exports.postRegister = (req, res, next) => {
             req.session.errorMessage = 'Username or email already exists.';
             req.session.save(err => {
                 if (err) {
-                    console.log(err);
+                    next(err);
                 }
 
                 return res.redirect('/register');
@@ -143,7 +143,7 @@ exports.postRegister = (req, res, next) => {
         res.redirect('/login');
     })
     .catch(err => {
-        console.log(err.message);
+        next(err);
     });
 }
 
@@ -163,7 +163,7 @@ exports.postResetPassword = (req, res, next) => {
 
     crypto.randomBytes(32, (err, buffer) => {
         if (err) {
-            console.log(err);
+            next(err);
             return res.redirect('/reset-password');
         }
 
@@ -175,7 +175,7 @@ exports.postResetPassword = (req, res, next) => {
                     req.session.errorMessage = 'No account with that email found.';
                     req.session.save(err => {
                         if (err) {
-                            console.log(err);
+                            next(err);
                         }
 
                         return res.redirect('/reset-password');
@@ -211,7 +211,7 @@ exports.postResetPassword = (req, res, next) => {
                     });
             })
             .catch(err => {
-                console.log(err);
+                next(err);
             });
     });
 }
@@ -225,7 +225,7 @@ exports.getNewPassword = (req, res, next) => {
                 req.session.errorMessage = 'Invalid or expired token.';
                 req.session.save(err => {
                     if (err) {
-                        console.log(err);
+                        next(err);
                     }
 
                     return res.redirect('/reset-password');
@@ -243,7 +243,7 @@ exports.getNewPassword = (req, res, next) => {
             });
         })
         .catch(err => {
-            console.log(err);
+            next(err);
         });
 }
 
@@ -265,7 +265,7 @@ exports.postNewPassword = (req, res, next) => {
             req.session.errorMessage = 'Invalid or expired token.';
             req.session.save(err => {
                 if (err) {
-                    console.log(err);
+                    next(err);
                 }
 
                 return res.redirect('/reset-password');
@@ -285,6 +285,6 @@ exports.postNewPassword = (req, res, next) => {
         res.redirect('/login');
     })
     .catch(err => {
-        console.log(err);
+        next(err);
     });
 }

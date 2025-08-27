@@ -19,11 +19,11 @@ exports.getIndex = (req, res, next) => {
                     });
                 })
                 .catch(err => {
-                    console.log(err);
+                    next(err);
                 });
         })
         .catch(err => {
-            console.log(err);
+            next(err);
         });
 };
 
@@ -43,11 +43,11 @@ exports.getProducts = (req, res, next) => {
                     }); 
                 })
                 .catch(err => {
-                    console.log(err);
+                    next(err);
                 });
         })
         .catch(err => {
-            console.log(err);
+            next(err);
         });
 };
 
@@ -60,7 +60,7 @@ exports.getProduct = (req, res, next) => {
                 path: '/products',
             });
         }).catch(err => {
-            console.log(err);
+            next(err);
         });
 };
 
@@ -86,7 +86,7 @@ exports.getProductsByCategory = (req, res, next) => {
             });
         })
         .catch(err => {
-            console.log(err);
+            next(err);
         });
 };
 
@@ -101,7 +101,7 @@ exports.getCart = (req, res, next) => {
             });
         })
         .catch(err => {
-            console.log(err);
+            next(err);
         });
 };
 
@@ -116,7 +116,7 @@ exports.postCart = (req, res, next) => {
             res.redirect('/cart');
         })
         .catch(err => {
-            console.log(err);
+            next(err);
         });
 };
 
@@ -128,7 +128,7 @@ exports.postCartItemDelete = (req, res, next) => {
             res.redirect('/cart');
         })
         .catch(err => {
-            console.log(err);
+            next(err);
         });
 };
 
@@ -144,7 +144,7 @@ exports.getOrders = (req, res, next) => {
             });
         })
         .catch(err => {
-            console.log(err);
+            next(err);
         });
 };
 
@@ -180,6 +180,6 @@ exports.postOrder = (req, res, next) => {
             res.redirect('/orders');
         })
         .catch(err => {
-            console.log(err);
+            next(err);
         });
 };

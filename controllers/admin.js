@@ -15,7 +15,7 @@ exports.getProducts = (req, res, next) => {
                 action: req.query.action,
             });
         }).catch(err => {
-            res.redirect('/500');
+            next(err);
         });
 };
 
@@ -29,7 +29,7 @@ exports.getAddProduct = (req, res, next) => {
             });
         })
         .catch(err => {
-            res.redirect('/500');
+            next(err);
         });
 };
 
@@ -74,10 +74,10 @@ exports.postAddProduct = (req, res, next) => {
             //         });
             //     })
             //     .catch(err => {
-            //         res.redirect('/500');
+            //         next(err);
             //     });
 
-            res.redirect('/500');
+            next(err);
         });
 };
 
@@ -113,10 +113,10 @@ exports.getEditProduct = (req, res, next) => {
                     });
                 })
                 .catch(err => {
-                    res.redirect('/500');
+                    next(err);
                 });
         }).catch(err => {
-            res.redirect('/500');
+            next(err);
         });
 };
 
@@ -148,7 +148,7 @@ exports.postEditProduct = (req, res, next) => {
             res.redirect("/admin/products?action=edit");
         })
         .catch(err => {
-            res.redirect('/500');
+            next(err);
         });
 };
 
@@ -160,7 +160,7 @@ exports.postDeleteProduct = (req, res, next) => {
             res.redirect("/admin/products?action=delete");
         })
         .catch(err => {
-            res.redirect('/500');
+            next(err);
         });
 };
 
@@ -175,7 +175,7 @@ exports.getCategories = (req, res, next) => {
                 action: req.query.action,
             });
         }).catch(err => {
-            res.redirect('/500');
+            next(err);
         });
 };
 
@@ -201,7 +201,7 @@ exports.postAddCategory = (req, res, next) => {
             res.redirect("/admin/categories");
         })
         .catch(err => {
-            res.redirect('/500');
+            next(err);
         });
 };
 
@@ -219,7 +219,7 @@ exports.getEditCategory = (req, res, next) => {
                 path: "/admin/edit-category",
             });
         }).catch(err => {
-            res.redirect('/500');
+            next(err);
         });
 };
 
@@ -244,7 +244,7 @@ exports.postEditCategory = (req, res, next) => {
             res.redirect("/admin/categories?action=edit");
         })
         .catch(err => {
-            res.redirect('/500');
+            next(err);
         });
 };
 
@@ -255,6 +255,6 @@ exports.postDeleteCategory = (req, res, next) => {
             res.redirect("/admin/categories?action=delete");
         })
         .catch(err => {
-            res.redirect('/500');
+            next(err);
         });
 };
