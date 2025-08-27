@@ -65,6 +65,8 @@ app.use('/admin', isAdmin, adminRoutes);
 app.use(shopRoutes);
 app.use(accountRoutes);
 app.use(errorRoutes);
+
+app.use('/500', errorController.get500Page)
 app.use(errorController.get404Page);
 
 mongoose.connect(ConnectionString)

@@ -9,3 +9,9 @@ module.exports.get403Page = (req, res, next) => {
         title: 'Unauthorized Access',
     });
 }
+
+module.exports.get500Page = (req, res, next) => {
+    res.status(500).render('error/500', {
+        title: 'Error Page'
+    });
+}

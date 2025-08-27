@@ -15,7 +15,7 @@ exports.getProducts = (req, res, next) => {
                 action: req.query.action,
             });
         }).catch(err => {
-            console.log(err);
+            res.redirect('/500');
         });
 };
 
@@ -29,7 +29,7 @@ exports.getAddProduct = (req, res, next) => {
             });
         })
         .catch(err => {
-            console.log(err);
+            res.redirect('/500');
         });
 };
 
@@ -57,25 +57,27 @@ exports.postAddProduct = (req, res, next) => {
             res.redirect("/admin/products");
         })
         .catch(err => {
-            let message = '';
-            if (err.name == 'ValidationError') {
-                for (field in err.errors) {
-                    message += err.errors[field].message + '<br>';
-                }
-            }
+            // let message = '';
+            // if (err.name == 'ValidationError') {
+            //     for (field in err.errors) {
+            //         message += err.errors[field].message + '<br>';
+            //     }
+            // }
 
-            Category.find()
-                .then(categories => {
-                    res.render("admin/add-product", {
-                        title: "New Product",
-                        path: "/admin/add-product",
-                        categories: categories,
-                        errorMessage: message
-                    });
-                })
-                .catch(err => {
-                    console.log(err);
-                });
+            // Category.find()
+            //     .then(categories => {
+            //         res.render("admin/add-product", {
+            //             title: "New Product",
+            //             path: "/admin/add-product",
+            //             categories: categories,
+            //             errorMessage: message
+            //         });
+            //     })
+            //     .catch(err => {
+            //         res.redirect('/500');
+            //     });
+
+            res.redirect('/500');
         });
 };
 
@@ -111,10 +113,10 @@ exports.getEditProduct = (req, res, next) => {
                     });
                 })
                 .catch(err => {
-                    console.log(err);
+                    res.redirect('/500');
                 });
         }).catch(err => {
-            console.log(err);
+            res.redirect('/500');
         });
 };
 
@@ -146,7 +148,7 @@ exports.postEditProduct = (req, res, next) => {
             res.redirect("/admin/products?action=edit");
         })
         .catch(err => {
-            console.log(err);
+            res.redirect('/500');
         });
 };
 
@@ -158,7 +160,7 @@ exports.postDeleteProduct = (req, res, next) => {
             res.redirect("/admin/products?action=delete");
         })
         .catch(err => {
-            console.log(err);
+            res.redirect('/500');
         });
 };
 
@@ -173,7 +175,7 @@ exports.getCategories = (req, res, next) => {
                 action: req.query.action,
             });
         }).catch(err => {
-            console.log(err);
+            res.redirect('/500');
         });
 };
 
@@ -199,7 +201,7 @@ exports.postAddCategory = (req, res, next) => {
             res.redirect("/admin/categories");
         })
         .catch(err => {
-            console.log(err);
+            res.redirect('/500');
         });
 };
 
@@ -217,7 +219,7 @@ exports.getEditCategory = (req, res, next) => {
                 path: "/admin/edit-category",
             });
         }).catch(err => {
-            console.log(err);
+            res.redirect('/500');
         });
 };
 
@@ -242,7 +244,7 @@ exports.postEditCategory = (req, res, next) => {
             res.redirect("/admin/categories?action=edit");
         })
         .catch(err => {
-            console.log(err);
+            res.redirect('/500');
         });
 };
 
@@ -253,6 +255,6 @@ exports.postDeleteCategory = (req, res, next) => {
             res.redirect("/admin/categories?action=delete");
         })
         .catch(err => {
-            console.log(err);
+            res.redirect('/500');
         });
 };
