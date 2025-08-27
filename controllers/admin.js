@@ -38,7 +38,7 @@ exports.postAddProduct = (req, res, next) => {
     const price = req.body.price;
     const description = req.body.description;
     const ids = req.body.categoryIds;
-    const isActive = req.body.isActive;
+    const isActive = req.body.isActive === "on" ? true : false;
     
     const imagePath = req.file ? req.file.path.replace(/\\/g, "/") : null;
 
@@ -128,7 +128,7 @@ exports.postEditProduct = (req, res, next) => {
     const image = req.body.image;
     const description = req.body.description;
     const ids = req.body.categoryIds;
-    const isActive = req.body.isActive;
+    const isActive = req.body.isActive === "on" ? true : false;
 
     const imagePath = req.file ? req.file.path.replace(/\\/g, "/") : null;
 
