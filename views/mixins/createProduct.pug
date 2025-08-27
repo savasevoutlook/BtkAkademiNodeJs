@@ -2,8 +2,8 @@ mixin createProduct(product)
     .col-md-4
         .card.mb-3
             a(href=`/products/${product._id}`)
-                if product.imageUrls && product.imageUrls.length > 0
-                    img.card-img-top(src=product.imageUrls[0], alt=product.name)
+                if product.imageUrl
+                    img.card-img-top(src=product.imageUrl, alt=product.name)
                 else
                     img.card-img-top(src="/img/no-image.png", alt="No Image")
 

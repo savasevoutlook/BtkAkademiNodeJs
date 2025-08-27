@@ -4,37 +4,10 @@ block content
     .row
         .col-md-6
             .border.rounded.p-2.shadow-sm
-                if product.imageUrls.length > 0
-                    - var carouselId = `carousel-${product._id}`
-
-                    .carousel.slide(id=carouselId, data-ride="carousel")
-                        // Indicators
-                        ol.carousel-indicators
-                            each imageUrl, index in product.imageUrls
-                                li(data-target=`#${carouselId}` data-slide-to=index class=index === 0 ? 'active' : '')
-
-                        // Carousel items
-                        .carousel-inner
-                            each imageUrl, index in product.imageUrls
-                                if index === 0
-                                    .carousel-item.active
-                                        img.d-block.w-100(src=imageUrl, alt=`Slide ${index + 1}`)
-                                else
-                                    .carousel-item
-                                        img.d-block.w-100(src=imageUrl, alt=`Slide ${index + 1}`)
-
-                        // Controls
-                        a.carousel-control-prev(href=`#${carouselId}` role="button" data-slide="prev")
-                            span.carousel-control-prev-icon(aria-hidden="true")
-                            span.sr-only Previous
-
-                        a.carousel-control-next(href=`#${carouselId}` role="button" data-slide="next")
-                            span.carousel-control-next-icon(aria-hidden="true")
-                            span.sr-only Next
+                if product.imageUrl
+                    img(src=product.imageUrl, alt=product.name).img-fluid.rounded
                 else
                     img(src="/img/no-image.png", alt="No Image").img-fluid.rounded
-
-
         .col-md-6.pl-4
             h5 #{product.name}
             hr
