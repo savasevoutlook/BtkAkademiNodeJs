@@ -37,9 +37,9 @@ block content
                                 td.text-center #{product.price} TL
                                 td #{product.userId.username}
                                 td.text-center
-                                    a.btn.btn-primary.btn-sm(href=`/admin/edit-product/${product._id}`) Edit
+                                    a.btn.btn-primary.btn-sm.mr-1(href=`/admin/edit-product/${product._id}`) Edit
 
-                                    form(action='/admin/delete-product', method='post')
+                                    form(action='/admin/delete-product', method='post').d-inline
                                         input(type='hidden', name='productId', value=`${product._id}`)
                                         input(type="hidden", name="_csrf", value=csrfToken)
                                         
