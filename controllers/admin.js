@@ -1,6 +1,7 @@
 const Product = require("../models/product");
 const Category = require("../models/category");
-
+const fs = require('fs');
+const path = require('path');
 
 exports.getProducts = (req, res, next) => {
     Product.find({ userId: req.user._id })
@@ -103,22 +104,40 @@ exports.getEditProduct = (req, res, next) => {
 exports.postEditProduct = (req, res, next) => {
     const id = req.body.id;
     const categoryIds = req.body.categoryIds;
-
-    const updateData = {
-        name: req.body.name,
-        price: req.body.price,
-        description: req.body.description,
-        categories: categoryIds ? categoryIds : [],
-        isActive: req.body.isActive === "on" ? true : false,
-    };
+    let imageUrl;
 
     if (req.file) {
-        updateData.imageUrl = '/' + req.file.path.replace(/\\/g, "/");
+        imageUrl = '/' + req.file.path.replace(/\\/g, "/");
     }
 
-    Product.updateOne({ _id: id, userId: req.user._id },
-        {
-            $set: updateData
+    Product.findOne({ _id: id, userId: req.user._id })
+        .then(product => {
+            if (!product) {
+                return res.redirect('/admin/products');
+            }
+
+            product.name = req.body.name;
+            product.price = req.body.price;
+            product.description = req.body.description;
+            product.categories = categoryIds ? categoryIds : [];
+            product.isActive = req.body.isActive === "on" ? true : false;
+
+            if (imageUrl) {
+                if (product.imageUrl) {
+
+                    const fullImagePath = path.join(__dirname, '..', product.imageUrl); 
+
+                    fs.unlink(fullImagePath, (err) => {
+                        if (err) {
+                            console.log(err);
+                        }
+                    });
+                }
+
+                product.imageUrl = imageUrl;
+            }
+
+            return product.save();
         })
         .then(() => {
             res.redirect("/admin/products?action=edit");
