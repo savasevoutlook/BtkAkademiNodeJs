@@ -21,9 +21,9 @@ router.get('/edit-category/:categoryId', csrfTokenMiddleware, adminController.ge
 router.get('/edit-product/:productId', csrfTokenMiddleware, adminController.getEditProduct);
 
 
-router.post('/add-product', upload.array('image', 10), doubleCsrfProtection, adminController.postAddProduct);
+router.post('/add-product', upload, doubleCsrfProtection, adminController.postAddProduct);
 
-router.post('/edit-product', upload.array('image', 10), doubleCsrfProtection, adminController.postEditProduct);
+router.post('/edit-product', upload, doubleCsrfProtection, adminController.postEditProduct);
 
 router.post('/delete-product', doubleCsrfProtection, adminController.postDeleteProduct);
 
