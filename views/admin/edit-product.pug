@@ -25,6 +25,11 @@ block content
                     .col-10
                         input.form-control-file#imageUrl(type="file", name="imageUrl", accept="image/*")
                 .form-group.row
+                    if product.imageUrl
+                        .col-2.offset-2
+                            .border.border-secondary
+                                img(src=product.imageUrl, alt=`${product.name}`).img-fluid
+                .form-group.row
                     label(for="description").col-2.col-form-label Description
                     .col-10
                         textarea.form-control#description(name="description") #{product.description}
