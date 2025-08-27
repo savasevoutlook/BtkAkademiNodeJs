@@ -42,11 +42,9 @@ exports.postAddProduct = (req, res, next) => {
     
     const imageUrls = req.files ? req.files.map(file => '/' + file.path.replace(/\\/g, "/")) : [];
 
-    console.log(imageUrls);
-
     const product = new Product({
         name: name,
-        // price: price,
+        price: price,
         description: description,
         imageUrls: imageUrls,
         userId: req.user._id,
@@ -59,7 +57,25 @@ exports.postAddProduct = (req, res, next) => {
             res.redirect("/admin/products");
         })
         .catch(err => {
-            console.log(err);
+            let message = '';
+            if (err.name == 'ValidationError') {
+                for (field in err.errors) {
+                    message += err.errors[field].message + '<br>';
+                }
+            }
+
+            Category.find()
+                .then(categories => {
+                    res.render("admin/add-product", {
+                        title: "New Product",
+                        path: "/admin/add-product",
+                        categories: categories,
+                        errorMessage: message
+                    });
+                })
+                .catch(err => {
+                    console.log(err);
+                });
         });
 };
 
