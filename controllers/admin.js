@@ -57,26 +57,6 @@ exports.postAddProduct = (req, res, next) => {
             res.redirect("/admin/products");
         })
         .catch(err => {
-            // let message = '';
-            // if (err.name == 'ValidationError') {
-            //     for (field in err.errors) {
-            //         message += err.errors[field].message + '<br>';
-            //     }
-            // }
-
-            // Category.find()
-            //     .then(categories => {
-            //         res.render("admin/add-product", {
-            //             title: "New Product",
-            //             path: "/admin/add-product",
-            //             categories: categories,
-            //             errorMessage: message
-            //         });
-            //     })
-            //     .catch(err => {
-            //         next(err);
-            //     });
-
             next(err);
         });
 };
