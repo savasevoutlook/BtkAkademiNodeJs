@@ -2,16 +2,15 @@ extends ../layouts/main-layout.pug
 
 block content
     .row
-        .col-md-6
+        .col-6
             .border.rounded.p-2.shadow-sm
                 if product.imageUrl
                     img(src=product.imageUrl, alt=product.name).img-fluid.rounded
                 else
                     img(src="/img/no-image.png", alt="No Image").img-fluid.rounded
-        .col-md-6.pl-4
+        .col-6.pl-4
             h5 #{product.name}
             hr
-            p #{product.description}
             p #{product.price} TL
 
             form(action='/cart', method='POST')
@@ -19,3 +18,6 @@ block content
                 input(type="hidden", name="_csrf", value=csrfToken)
                 button(type='submit').btn.btn-outline-danger
                     i.fa.fa-shopping-cart  Add to Cart
+    .row.mt-5
+        .col-12
+            div !{product.description}

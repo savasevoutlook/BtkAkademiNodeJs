@@ -30,7 +30,7 @@ block content
                 .form-group.row
                     label(for="description").col-2.col-form-label Description
                     .col-10
-                        textarea.form-control#description(name="description")
+                        textarea.form-control#description(name="description", rows="5")
                 if categories
                     .form-group.row
                         label(for="categoryIds").col-2.col-form-label Category
@@ -48,3 +48,24 @@ block content
                 .form-group.row
                     .col-10.offset-2
                         button.btn.btn-primary(type="submit") Save
+
+//- block scripts
+//-     script(src="https://cdn.ckeditor.com/4.21.0/standard/ckeditor.js")
+//-     script.
+//-         CKEDITOR.replace('description', {
+//-             height: 200
+//-         });
+
+block scripts
+    script(src="https://cdn.ckeditor.com/ckeditor5/38.1.1/classic/ckeditor.js")
+    script.
+        ClassicEditor
+            .create(document.querySelector('#description'))
+            .then(editor => {
+                const editable = editor.ui.view.editable.element;
+                editable.style.minHeight = '150px';
+                editable.style.height = '150px';
+            })
+            .catch(error => {
+                console.error(error);
+            });
