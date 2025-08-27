@@ -121,28 +121,24 @@ exports.getEditProduct = (req, res, next) => {
 };
 
 exports.postEditProduct = (req, res, next) => {
-
     const id = req.body.id;
-    const name = req.body.name;
-    const price = req.body.price;
-    const image = req.body.image;
-    const description = req.body.description;
-    const ids = req.body.categoryIds;
-    const isActive = req.body.isActive === "on" ? true : false;
+    const categoryIds = req.body.categoryIds;
 
-    const imagePath = req.file ? '/' + req.file.path.replace(/\\/g, "/") : null;
+    const updateData = {
+        name: req.body.name,
+        price: req.body.price,
+        description: req.body.description,
+        categories: categoryIds ? categoryIds : [],
+        isActive: req.body.isActive === "on" ? true : false,
+    };
+
+    if (req.file) {
+        updateData.imageUrl = '/' + req.file.path.replace(/\\/g, "/");
+    }
 
     Product.updateOne({ _id: id, userId: req.user._id },
         {
-            $set: {
-                name: name,
-                price: price,
-                image: image,
-                description: description,
-                categories: ids ? ids : [],
-                imageUrl: imagePath,
-                isActive: isActive,
-            }
+            $set: updateData
         })
         .then(() => {
             res.redirect("/admin/products?action=edit");
